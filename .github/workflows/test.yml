@@ -1,0 +1,88 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+permissions:
+  checks: write
+  contents: read
+
+jobs:
+  test:
+    name: Run Pester Tests
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Pester
+      shell: pwsh
+      run: |
+        Install-Module -Name Pester -MinimumVersion 5.0 -Force -SkipPublisherCheck -Scope CurrentUser
+        Import-Module Pester -MinimumVersion 5.0
+        Get-Module Pester -ListAvailable | Select-Object Name, Version
+
+    - name: Run Unit Tests
+      shell: pwsh
+      run: |
+        ./tests/Invoke-Tests.ps1 -Type Unit -Output Detailed
+
+    - name: Run Unit Tests with Code Coverage
+      shell: pwsh
+      run: |
+        ./tests/Invoke-Tests.ps1 -Type Unit -CodeCoverage -Output Normal
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: testResults.xml
+
+    - name: Upload Code Coverage
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-coverage
+        path: coverage.xml
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action/windows@v2
+      if: always()
+      with:
+        files: testResults.xml
+        check_name: Test Results
+
+  test-integration:
+    name: Run Integration Tests
+    runs-on: windows-latest
+    needs: test
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Pester
+      shell: pwsh
+      run: |
+        Install-Module -Name Pester -MinimumVersion 5.0 -Force -SkipPublisherCheck -Scope CurrentUser
+
+    - name: Run Integration Tests
+      shell: pwsh
+      run: |
+        if (Test-Path ./tests/Integration) {
+          ./tests/Invoke-Tests.ps1 -Type Integration -Output Detailed
+        } else {
+          Write-Host "No integration tests found - skipping"
+        }

@@ -5,11 +5,11 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![PowerShell](https://img.shields.io/badge/PowerShell-7.0%2B-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)
-![GitHub language count](https://img.shields.io/github/languages/count/Heathen-Volholl/PowerShellFileManagerV2.0)
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/Heathen-Volholl/PowerShellFileManagerV2.0/main)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Heathen-Volholl/PowerShellFileManagerV2.0)
-![GitHub repo file or directory count](https://img.shields.io/github/directory-file-count/Heathen-Volholl/PowerShellFileManagerV2.0)
-![GitHub repo size](https://img.shields.io/github/repo-size/Heathen-Volholl/PowerShellFileManagerV2.0)
+![GitHub language count](https://img.shields.io/github/languages/count/Heathen-Volholl/PowerShellFileManager)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/Heathen-Volholl/PowerShellFileManager/main)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Heathen-Volholl/PowerShellFileManager)
+![GitHub repo file or directory count](https://img.shields.io/github/directory-file-count/Heathen-Volholl/PowerShellFileManager)
+![GitHub repo size](https://img.shields.io/github/repo-size/Heathen-Volholl/PowerShellFileManager)
 
 
 
@@ -153,8 +153,6 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 - ✅ **UAC elevation support** with seamless privilege escalation
 - ✅ **Enhanced security features** with file encryption/decryption and digital signatures
 - ✅ **Backup & recovery** with automatic backup before destructive operations and undo capabilities
-
-### Advanced Features
 
 #### Configuration Management
 - ✅ **Centralized configuration** with FileManagerConfig class

@@ -5,11 +5,11 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![PowerShell](https://img.shields.io/badge/PowerShell-7.0%2B-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)
-![GitHub language count](https://img.shields.io/github/languages/count/Heathen-Volholl/PowerShellFileManager)
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/Heathen-Volholl/PowerShellFileManager/main)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Heathen-Volholl/PowerShellFileManager)
-![GitHub repo file or directory count](https://img.shields.io/github/directory-file-count/Heathen-Volholl/PowerShellFileManager)
-![GitHub repo size](https://img.shields.io/github/repo-size/Heathen-Volholl/PowerShellFileManager)
+![GitHub language count](https://img.shields.io/github/languages/count/J-Ellette/PowerShellFileManager)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/J-Ellette/PowerShellFileManager/main)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/J-Ellette/PowerShellFileManager)
+![GitHub repo file or directory count](https://img.shields.io/github/directory-file-count/J-Ellette/PowerShellFileManager)
+![GitHub repo size](https://img.shields.io/github/repo-size/J-Ellette/PowerShellFileManager)
 
 
 
@@ -218,7 +218,7 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 ### Option 1: Clone Repository
 
 ```powershell
-git clone https://github.com/Heathen-Volholl/PowerShellFileManager.git
+git clone https://github.com/J-Ellette/PowerShellFileManager.git
 cd PowerShellFileManager
 Import-Module .\PowerShellFileManager.psd1
 ```
@@ -608,7 +608,7 @@ Uninstall-Plugin -Name "MyPlugin"
 ##  Architecture
 
 ```
-PowerShellFileManagerV2.0/
+PowerShellFileManager/
 ├── PowerShellFileManager.psd1       # Module manifest
 ├── PowerShellFileManager.psm1       # Root module
 ├── src/
@@ -735,8 +735,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ##  Support
 
-**Issues**: [GitHub Issues](https://github.com/Heathen-Volholl/PowerShellFileManagerV2.0/issues)
-**Discussions**: [GitHub Discussions](https://github.com/Heathen-Volholl/PowerShellFileManagerV2.0/discussions)
+**Issues**: [GitHub Issues](https://github.com/J-Ellette/PowerShellFileManager/issues)
+**Discussions**: [GitHub Discussions](https://github.com/J-Ellette/PowerShellFileManager/discussions)
 
 ##
 **Made with ❤️ using PowerShell 7**

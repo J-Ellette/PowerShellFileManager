@@ -1,4 +1,4 @@
-# PowerShell File Manager V2.0
+# PowerShell File Manager
 
 A command-centric file manager built with PowerShell 7, featuring rich GUI integration, advanced file operations, and extensive PowerShell scripting capabilities.
 
@@ -154,7 +154,7 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 - ✅ **Enhanced security features** with file encryption/decryption and digital signatures
 - ✅ **Backup & recovery** with automatic backup before destructive operations and undo capabilities
 
-### NEW: Advanced Features (V2.1)
+### Advanced Features
 
 #### Configuration Management
 - ✅ **Centralized configuration** with FileManagerConfig class
@@ -220,8 +220,8 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 ### Option 1: Clone Repository
 
 ```powershell
-git clone https://github.com/Heathen-Volholl/PowerShellFileManagerV2.0.git
-cd PowerShellFileManagerV2.0
+git clone https://github.com/Heathen-Volholl/PowerShellFileManager.git
+cd PowerShellFileManager
 Import-Module .\PowerShellFileManager.psd1
 ```
 

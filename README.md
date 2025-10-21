@@ -5,6 +5,8 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![PowerShell](https://img.shields.io/badge/PowerShell-7.0%2B-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)
+![Platform](https://img.shields.io/badge/platform-Linux-blue.svg)
+![Platform](https://img.shields.io/badge/platform-macOS-blue.svg)
 
 
 ##  Features

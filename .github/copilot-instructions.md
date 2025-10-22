@@ -272,7 +272,7 @@ Include comprehensive comment-based help for all exported functions:
 
 When contributing to this project:
 
-1. **Read CONTRIBUTING.md** for detailed contribution guidelines
+1. **Read docs/CONTRIBUTING.md** for detailed contribution guidelines
 2. **Follow existing patterns** in the codebase
 3. **Update documentation** for new features
 4. **Check code style** follows PowerShell best practices

@@ -226,21 +226,6 @@ These can be implemented as future enhancements.
 
 ---
 
-## Testing
-
-### Test Execution
-Run all tests:
-```powershell
-cd /path/to/PowerShellFileManagerV2.0
-pwsh -File tests/Invoke-Tests.ps1
-```
-
-### Test Coverage
-- **Before**: 3 modules tested (AlwaysOnTop, FileLocksmith, PreviewProviders)
-- **After**: 7+ modules tested (added UXFeatures, CoreModules, AdvancedSearch, FileOperations)
-
----
-
 ## User Benefits
 
 1. **Improved Productivity**

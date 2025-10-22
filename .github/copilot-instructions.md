@@ -7,7 +7,6 @@ This repository contains a command-centric file manager built with PowerShell 7,
 - **Language**: PowerShell 7.0+
 - **Platform Support**: Windows (full GUI), Linux, macOS (command-line features)
 - **GUI Framework**: Windows Presentation Foundation (WPF) for Windows
-- **Testing Framework**: Pester 5.x
 - **Module Type**: PowerShell Script Module (.psm1)
 
 ## Code Style Guidelines
@@ -59,52 +58,6 @@ When adding new functionality:
 - Create new modules following the existing pattern
 - Update `PowerShellFileManager.psd1` to export new functions
 - Update `PowerShellFileManager.psm1` to import new modules
-
-## Testing Requirements
-
-### Testing Framework
-
-- **Use Pester 5.x** for all tests
-- Test files must be named with `.Tests.ps1` suffix
-- Place unit tests in `tests/Unit/`
-- Place integration tests in `tests/Integration/`
-
-### Test Structure
-
-```powershell
-BeforeAll {
-    # Setup code
-    Import-Module $PSScriptRoot/../../PowerShellFileManager.psd1 -Force
-}
-
-Describe 'Function-Name' {
-    Context 'When condition' {
-        It 'Should perform expected behavior' {
-            # Test code
-        }
-    }
-}
-```
-
-### Running Tests
-
-```powershell
-# Run all tests
-.\tests\Invoke-Tests.ps1
-
-# Run with code coverage
-.\tests\Invoke-Tests.ps1 -CodeCoverage
-
-# Run with detailed output
-.\tests\Invoke-Tests.ps1 -Output Detailed
-```
-
-### Test Coverage Expectations
-
-- All new public functions should have corresponding unit tests
-- Tests should cover normal operation, edge cases, and error conditions
-- Mock external dependencies (file system, network, etc.) when appropriate
-- Test parameter validation and error handling
 
 ## Security Best Practices
 
@@ -172,7 +125,6 @@ Describe 'Function-Name' {
 
 - **PowerShell 7.0+** (PowerShell Core)
 - **.NET Framework 4.7.2+** (for WPF on Windows)
-- **Pester 5.x** (for testing)
 
 ### Optional Dependencies
 
@@ -322,11 +274,9 @@ When contributing to this project:
 
 1. **Read CONTRIBUTING.md** for detailed contribution guidelines
 2. **Follow existing patterns** in the codebase
-3. **Write tests** for new functionality
-4. **Update documentation** for new features
-5. **Run tests** before submitting PR: `.\tests\Invoke-Tests.ps1`
-6. **Check code style** follows PowerShell best practices
-7. **Platform testing** - Test on multiple platforms when possible
+3. **Update documentation** for new features
+4. **Check code style** follows PowerShell best practices
+5. **Platform testing** - Test on multiple platforms when possible
 
 ## Common Patterns to Follow
 
@@ -373,8 +323,6 @@ if ($PSCmdlet.ShouldProcess($targetPath, "Delete file")) {
 ## Resources
 
 - [PowerShell Best Practices](https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/cmdlet-development-guidelines)
-- [Pester Documentation](https://pester.dev/)
 - [WPF Documentation](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/)
 - [Project Documentation](../README.md)
-- [Testing Guide](../TESTING.md)
 - [Contributing Guide](../CONTRIBUTING.md)

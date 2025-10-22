@@ -649,45 +649,6 @@ PowerShellFileManager/
 └── Plugins/                         # User plugins
 ```
 
-##  Testing
-
-The project uses the Pester 5.x testing framework for automated testing.
-
-### Prerequisites
-
-Install Pester 5.x or higher:
-
-```powershell
-Install-Module -Name Pester -MinimumVersion 5.0 -Force -SkipPublisherCheck -Scope CurrentUser
-```
-
-### Running Tests
-
-```powershell
-# Run all unit tests
-.\tests\Invoke-Tests.ps1
-
-# Run with detailed output
-.\tests\Invoke-Tests.ps1 -Output Detailed
-
-# Run with code coverage
-.\tests\Invoke-Tests.ps1 -CodeCoverage
-```
-
-### Test Structure
-
-- `tests/Unit/` - Unit tests for individual modules
-- `tests/Integration/` - Integration tests
-- `tests/Invoke-Tests.ps1` - Main test runner
-- `PesterConfiguration.psd1` - Pester configuration
-
-### Test Coverage
-
-Current test coverage:
-- **AlwaysOnTop Module**: Window pinning functionality
-- **FileLocksmith Module**: File lock detection and unlocking
-- **PreviewProviders Module**: Enhanced preview for 19+ file formats
-
 ### Continuous Integration
 
 Tests run automatically on:
@@ -723,7 +684,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ##  Documentation
 
 - **[EXAMPLES.md](EXAMPLES.md)** - File Manager usage examples
-- **[TESTING.md](TESTING.md)** - Testing guide and procedures
 - **[GETTING_STARTED.md](GETTING_STARTED.md)** - Getting started guide
 - **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - Quick reference guide
 - **[USER_GUIDE.md](USER_GUIDE.md)** - Comprehensive user guide for GUI features

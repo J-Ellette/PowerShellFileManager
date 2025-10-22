@@ -108,12 +108,14 @@ Describe "FileLocksmith Module" {
 
         It "Should support ShouldProcess (WhatIf/Confirm)" {
             $command = Get-Command Unlock-File
-            $command.CmdletBinding.SupportsShouldProcess | Should -Be $true
+            $attr = $command.ScriptBlock.Attributes | Where-Object { $_ -is [System.Management.Automation.CmdletBindingAttribute] }
+            $attr.SupportsShouldProcess | Should -Be $true
         }
 
         It "Should have High ConfirmImpact" {
             $command = Get-Command Unlock-File
-            $command.CmdletBinding.ConfirmImpact | Should -Be 'High'
+            $attr = $command.ScriptBlock.Attributes | Where-Object { $_ -is [System.Management.Automation.CmdletBindingAttribute] }
+            $attr.ConfirmImpact | Should -Be 'High'
         }
     }
 

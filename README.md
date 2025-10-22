@@ -649,15 +649,6 @@ PowerShellFileManager/
 └── Plugins/                         # User plugins
 ```
 
-### Continuous Integration
-
-Tests run automatically on:
-- Push to `main` or `develop` branches
-- Pull requests
-- Manual workflow dispatch
-
-For detailed testing instructions, see [TESTING.md](TESTING.md).
-
 ---
 
 ##  Contributing
@@ -666,10 +657,9 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Run tests to ensure nothing breaks (`.\tests\Invoke-Tests.ps1`)
-4. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-5. Push to the branch (`git push origin feature/AmazingFeature`)
-6. Open a Pull Request (tests will run automatically)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ##  License
 

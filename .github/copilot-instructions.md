@@ -272,7 +272,7 @@ Include comprehensive comment-based help for all exported functions:
 
 When contributing to this project:
 
-1. **Read CONTRIBUTING.md** for detailed contribution guidelines
+1. **Read docs/CONTRIBUTING.md** for detailed contribution guidelines
 2. **Follow existing patterns** in the codebase
 3. **Update documentation** for new features
 4. **Check code style** follows PowerShell best practices
@@ -325,4 +325,4 @@ if ($PSCmdlet.ShouldProcess($targetPath, "Delete file")) {
 - [PowerShell Best Practices](https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/cmdlet-development-guidelines)
 - [WPF Documentation](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/)
 - [Project Documentation](../README.md)
-- [Contributing Guide](../CONTRIBUTING.md)
+- [Contributing Guide](../docs/CONTRIBUTING.md)

@@ -673,10 +673,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ##  Documentation
 
-- **[EXAMPLES.md](EXAMPLES.md)** - File Manager usage examples
-- **[GETTING_STARTED.md](GETTING_STARTED.md)** - Getting started guide
-- **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - Quick reference guide
-- **[USER_GUIDE.md](USER_GUIDE.md)** - Comprehensive user guide for GUI features
+- **[EXAMPLES.md](docs/EXAMPLES.md)** - File Manager usage examples
+- **[GETTING_STARTED.md](docs/GETTING_STARTED.md)** - Getting started guide
+- **[QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md)** - Quick reference guide
+- **[USER_GUIDE.md](docs/USER_GUIDE.md)** - Comprehensive user guide for GUI features
 
 ##  Support
 

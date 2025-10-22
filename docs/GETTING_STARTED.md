@@ -383,7 +383,7 @@ Some operations require administrator privileges:
 
 ## Next Steps
 
-- Explore the [README](README.md) for complete feature list
+- Explore the [README](../README.md) for complete feature list
 - Check out example scripts in the `Examples` directory
 - Install plugins from the plugin marketplace
 - Customize themes and keyboard shortcuts

@@ -217,16 +217,18 @@ function Protect-FileWithPassword {
             $salt = New-Object byte[] 32
             $rng = [System.Security.Cryptography.RandomNumberGenerator]::Create()
             $rng.GetBytes($salt)
-            
+
             # Convert SecureString to plain text for cryptographic operations
             $passwordPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password)
-            $passwordPlain = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($passwordPtr)
-            $pbkdf2 = New-Object System.Security.Cryptography.Rfc2898DeriveBytes($passwordPlain, $salt, 10000)
-            
-            # Clear password from memory
-            [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($passwordPtr)
-            $pbkdf2 = New-Object System.Security.Cryptography.Rfc2898DeriveBytes($Password, $salt, 10000)
-            $aes.Key = $pbkdf2.GetBytes(32)
+            try {
+                $passwordPlain = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($passwordPtr)
+                $pbkdf2 = New-Object System.Security.Cryptography.Rfc2898DeriveBytes($passwordPlain, $salt, 100000, [System.Security.Cryptography.HashAlgorithmName]::SHA256)
+                $aes.Key = $pbkdf2.GetBytes(32)
+            }
+            finally {
+                # Clear password from memory immediately
+                [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($passwordPtr)
+            }
             $aes.GenerateIV()
             
             # Encrypt
@@ -326,12 +328,15 @@ function Unprotect-FileWithPassword {
             # Derive key from password using PBKDF2
             # Convert SecureString to plain text for cryptographic operations
             $passwordPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password)
-            $passwordPlain = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($passwordPtr)
-            $pbkdf2 = New-Object System.Security.Cryptography.Rfc2898DeriveBytes($passwordPlain, $salt, 10000)
-            
-            # Clear password from memory
-            [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($passwordPtr)
-            $aes.Key = $pbkdf2.GetBytes(32)
+            try {
+                $passwordPlain = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($passwordPtr)
+                $pbkdf2 = New-Object System.Security.Cryptography.Rfc2898DeriveBytes($passwordPlain, $salt, 100000, [System.Security.Cryptography.HashAlgorithmName]::SHA256)
+                $aes.Key = $pbkdf2.GetBytes(32)
+            }
+            finally {
+                # Clear password from memory immediately
+                [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($passwordPtr)
+            }
             
             # Decrypt
             $decryptor = $aes.CreateDecryptor()

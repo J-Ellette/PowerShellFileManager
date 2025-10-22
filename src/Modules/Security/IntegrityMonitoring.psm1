@@ -15,7 +15,7 @@ function Enable-IntegrityMonitoring {
     .PARAMETER Path
         Path to file or directory to monitor
     .PARAMETER Algorithm
-        Hash algorithm to use (MD5, SHA1, SHA256, SHA512)
+        Hash algorithm to use (SHA256, SHA512)
     .PARAMETER Recurse
         Monitor subdirectories recursively
     .EXAMPLE
@@ -27,7 +27,7 @@ function Enable-IntegrityMonitoring {
         [string]$Path,
         
         [Parameter(Mandatory=$false)]
-        [ValidateSet('MD5', 'SHA1', 'SHA256', 'SHA512')]
+        [ValidateSet('SHA256', 'SHA512')]
         [string]$Algorithm = 'SHA256',
         
         [Parameter(Mandatory=$false)]

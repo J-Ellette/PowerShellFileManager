@@ -506,7 +506,7 @@ function Get-AvailableCommands {
         [PSCustomObject]@{ Name = "Calculate Folder Size"; Description = "Calculate and display folder sizes"; Command = "Get-FolderSize" }
         [PSCustomObject]@{ Name = "Search Files"; Description = "Advanced file search with regex"; Command = "Search-Files" }
         [PSCustomObject]@{ Name = "Compare Files"; Description = "Compare two files side-by-side"; Command = "Invoke-FileComparison" }
-        [PSCustomObject]@{ Name = "Get Checksum"; Description = "Calculate file checksum (MD5/SHA256)"; Command = "Get-FileChecksum" }
+        [PSCustomObject]@{ Name = "Get Checksum"; Description = "Calculate file checksum (SHA256/SHA512)"; Command = "Get-FileChecksum" }
         [PSCustomObject]@{ Name = "Batch Rename"; Description = "Rename multiple files with patterns"; Command = "Rename-FileBatch" }
         [PSCustomObject]@{ Name = "Sync Directories"; Description = "Synchronize two directories"; Command = "Sync-Directories" }
         [PSCustomObject]@{ Name = "Disk Space Analyzer"; Description = "Analyze disk space usage"; Command = "Get-DiskSpace" }

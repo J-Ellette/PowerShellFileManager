@@ -8,7 +8,7 @@ function Find-DuplicateFiles {
     .SYNOPSIS
         Finds duplicate files by hash, name pattern, or size
     .DESCRIPTION
-        Scans directories for duplicate files using MD5/SHA256 hashing with comprehensive error handling
+        Scans directories for duplicate files using SHA256 hashing with comprehensive error handling
     .PARAMETER Path
         Path to scan for duplicates
     .PARAMETER Method
@@ -83,9 +83,9 @@ function Find-DuplicateFiles {
                 }
                 
                 $key = switch ($Method) {
-                    'Hash' { 
+                    'Hash' {
                         try {
-                            $hash = Get-FileHash -Path $file.FullName -Algorithm MD5 -ErrorAction Stop
+                            $hash = Get-FileHash -Path $file.FullName -Algorithm SHA256 -ErrorAction Stop
                             $hash.Hash
                         } catch [System.UnauthorizedAccessException] {
                             $accessDeniedCount++
@@ -325,13 +325,13 @@ function Get-FolderSize {
 function Get-FileChecksum {
     <#
     .SYNOPSIS
-        Calculates file checksum (MD5/SHA256)
+        Calculates file checksum (SHA256/SHA512)
     .DESCRIPTION
         Computes cryptographic hash for file verification
     .PARAMETER Path
         Path to file
     .PARAMETER Algorithm
-        Hash algorithm (MD5, SHA1, SHA256, SHA512)
+        Hash algorithm (SHA256, SHA512)
     .EXAMPLE
         Get-FileChecksum -Path file.txt -Algorithm SHA256
         Gets SHA256 checksum
@@ -342,7 +342,7 @@ function Get-FileChecksum {
         [string]$Path,
         
         [Parameter(Mandatory=$false)]
-        [ValidateSet('MD5', 'SHA1', 'SHA256', 'SHA512')]
+        [ValidateSet('SHA256', 'SHA512')]
         [string]$Algorithm = 'SHA256'
     )
     

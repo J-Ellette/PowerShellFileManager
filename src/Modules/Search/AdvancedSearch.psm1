@@ -1439,10 +1439,87 @@ function Get-SearchHistory {
     }
 }
 
+function Search-Content {
+    <#
+    .SYNOPSIS
+        Searches file contents for a pattern
+    .DESCRIPTION
+        Searches within file contents using regex patterns
+    .PARAMETER Path
+        Base path to search
+    .PARAMETER Pattern
+        Search pattern (regex)
+    .PARAMETER CaseSensitive
+        Perform case-sensitive search
+    .EXAMPLE
+        Search-Content -Path C:\Logs -Pattern "error"
+        Searches for "error" in log files
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Path,
+        
+        [Parameter(Mandatory=$true)]
+        [string]$Pattern,
+        
+        [Parameter(Mandatory=$false)]
+        [switch]$CaseSensitive
+    )
+    
+    Write-Host "Searching file contents in: $Path" -ForegroundColor Cyan
+    Write-Host "Pattern: $Pattern" -ForegroundColor Gray
+    
+    $results = Get-ChildItem -Path $Path -Recurse -File -ErrorAction SilentlyContinue | 
+        Where-Object { 
+            try {
+                $content = Get-Content $_.FullName -Raw -ErrorAction SilentlyContinue
+                if ($CaseSensitive) {
+                    $content -cmatch $Pattern
+                } else {
+                    $content -match $Pattern
+                }
+            } catch {
+                $false
+            }
+        }
+    
+    Write-Host "`nFound $($results.Count) matches" -ForegroundColor Green
+    $results | Format-Table Name, FullName, Length, LastWriteTime -AutoSize
+    
+    return $results
+}
+
+function Get-FuzzyMatch {
+    <#
+    .SYNOPSIS
+        Alias for Get-FuzzyMatchScore - calculates fuzzy match similarity
+    .DESCRIPTION
+        Returns a score between 0 and 1 indicating similarity between two strings
+    .PARAMETER String1
+        First string to compare
+    .PARAMETER String2
+        Second string to compare
+    .EXAMPLE
+        Get-FuzzyMatch "PowerShell" "powershel"
+        Returns approximately 0.9 (90% similarity)
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$String1,
+        
+        [Parameter(Mandatory=$true)]
+        [string]$String2
+    )
+    
+    return Get-FuzzyMatchScore -String1 $String1 -String2 $String2
+}
+
 # Initialize search history on module load
 Load-SearchHistory
 
-Export-ModuleMember -Function Search-Files, Save-SearchQuery, Get-SavedSearches, 
+Export-ModuleMember -Function Search-Files, Search-Content, Get-FuzzyMatch, Save-SearchQuery, Get-SavedSearches, 
                               Update-FileIndex, Search-IndexedFiles, Get-FileIndexStatistics, 
                               Clear-FileCache, Optimize-FileCache, Sync-Directories,
                               Search-FilesFuzzy, Get-SearchSuggestions, Clear-SearchHistory, Get-SearchHistory

@@ -286,4 +286,60 @@ function Show-ObjectInspector {
     }
 }
 
-Export-ModuleMember -Function Show-ObjectInspector
+function Get-ObjectDetails {
+    <#
+    .SYNOPSIS
+        Gets detailed properties of an object
+    .DESCRIPTION
+        Returns all properties and metadata of an object as a structured result
+    .PARAMETER Path
+        Path to the file to inspect
+    .PARAMETER Object
+        PowerShell object to inspect
+    .EXAMPLE
+        Get-ObjectDetails -Path "C:\file.txt"
+        Gets details for a file
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
+        [object]$Object,
+        
+        [Parameter(Mandatory=$false)]
+        [string]$Path
+    )
+    
+    # Get the object to inspect
+    if ($Path) {
+        $Object = Get-Item -Path $Path
+    }
+    
+    if (-not $Object) {
+        Write-Error "No object or path specified"
+        return
+    }
+    
+    $properties = [System.Collections.ArrayList]::new()
+    
+    # Get standard properties
+    foreach ($prop in ($Object | Get-Member -MemberType Property, NoteProperty)) {
+        try {
+            $value = $Object.($prop.Name)
+            $properties.Add([PSCustomObject]@{
+                Name = $prop.Name
+                Value = if ($value) { $value.ToString() } else { "" }
+                Type = if ($value) { $value.GetType().Name } else { "Null" }
+            }) | Out-Null
+        } catch {
+            $properties.Add([PSCustomObject]@{
+                Name = $prop.Name
+                Value = "<Error reading property>"
+                Type = "Error"
+            }) | Out-Null
+        }
+    }
+    
+    return $properties
+}
+
+Export-ModuleMember -Function Show-ObjectInspector, Get-ObjectDetails

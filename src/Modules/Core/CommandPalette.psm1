@@ -668,4 +668,41 @@ function Invoke-PaletteCommand {
     }
 }
 
-Export-ModuleMember -Function Invoke-CommandPalette
+function Get-CommandHistory {
+    <#
+    .SYNOPSIS
+        Gets the command palette history
+    .DESCRIPTION
+        Returns the history of commands executed via the command palette
+    .EXAMPLE
+        Get-CommandHistory
+        Returns all command history
+    #>
+    [CmdletBinding()]
+    param()
+    
+    return $script:CommandHistory
+}
+
+function Add-CommandToHistory {
+    <#
+    .SYNOPSIS
+        Adds a command to the command palette history
+    .DESCRIPTION
+        Records a command in the palette command history
+    .PARAMETER Command
+        The command string to add to history
+    .EXAMPLE
+        Add-CommandToHistory -Command "Get-ChildItem"
+        Adds the command to history
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Command
+    )
+    
+    $script:CommandHistory.Add($Command) | Out-Null
+}
+
+Export-ModuleMember -Function Invoke-CommandPalette, Get-CommandHistory, Add-CommandToHistory

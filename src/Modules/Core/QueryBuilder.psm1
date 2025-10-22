@@ -397,4 +397,66 @@ function Load-Query {
     return $null
 }
 
-Export-ModuleMember -Function New-QueryBuilder
+function Build-FileQuery {
+    <#
+    .SYNOPSIS
+        Builds a file query from criteria
+    .DESCRIPTION
+        Constructs a PowerShell query expression for file searches
+    .PARAMETER Criteria
+        Query criteria hashtable
+    .EXAMPLE
+        Build-FileQuery -Criteria @{ Name = "*.txt"; Size = "GT 1MB" }
+        Builds a query for text files larger than 1MB
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$false)]
+        [hashtable]$Criteria = @{}
+    )
+    
+    $whereClauses = @()
+    
+    foreach ($key in $Criteria.Keys) {
+        $value = $Criteria[$key]
+        
+        switch ($key) {
+            'Name' {
+                $whereClauses += "`$_.Name -like '$value'"
+            }
+            'Extension' {
+                $whereClauses += "`$_.Extension -eq '$value'"
+            }
+            'Size' {
+                # Parse size criteria (e.g., "GT 1MB", "LT 100KB")
+                if ($value -match '^(GT|LT|EQ)\s+(\d+)(KB|MB|GB)?$') {
+                    $op = switch ($Matches[1]) {
+                        'GT' { '-gt' }
+                        'LT' { '-lt' }
+                        'EQ' { '-eq' }
+                    }
+                    $size = [long]$Matches[2]
+                    $unit = $Matches[3]
+                    if ($unit -eq 'KB') { $size *= 1KB }
+                    elseif ($unit -eq 'MB') { $size *= 1MB }
+                    elseif ($unit -eq 'GB') { $size *= 1GB }
+                    
+                    $whereClauses += "`$_.Length $op $size"
+                }
+            }
+            'Modified' {
+                # Date criteria
+                $whereClauses += "`$_.LastWriteTime -ge [DateTime]'$value'"
+            }
+        }
+    }
+    
+    if ($whereClauses.Count -gt 0) {
+        $whereClause = $whereClauses -join ' -and '
+        return "Get-ChildItem -Recurse | Where-Object { $whereClause }"
+    }
+    
+    return "Get-ChildItem -Recurse"
+}
+
+Export-ModuleMember -Function New-QueryBuilder, Build-FileQuery

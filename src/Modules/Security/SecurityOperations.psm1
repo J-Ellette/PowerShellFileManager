@@ -183,8 +183,8 @@ function Protect-FileWithPassword {
     .PARAMETER OutputPath
         Optional output path for encrypted file
     .EXAMPLE
-        Protect-FileWithPassword -FilePath "C:\secret.txt" -Password "MyPassword123"
-    #>
+        $securePassword = ConvertTo-SecureString "MyPassword123" -AsPlainText -Force
+        Protect-FileWithPassword -FilePath "C:\secret.txt" -Password $securePassword
     [CmdletBinding(SupportsShouldProcess)]
     param(
         [Parameter(Mandatory=$true)]
@@ -192,10 +192,11 @@ function Protect-FileWithPassword {
         [string]$FilePath,
         
         [Parameter(Mandatory=$true)]
-        [string]$Password,
+        [SecureString]$Password,
         
         [Parameter(Mandatory=$false)]
         [string]$OutputPath
+    )
     )
     
     if (-not $OutputPath) {
@@ -212,12 +213,18 @@ function Protect-FileWithPassword {
             $aes.KeySize = 256
             $aes.BlockSize = 128
             $aes.Mode = [System.Security.Cryptography.CipherMode]::CBC
-            
             # Derive key from password using PBKDF2
             $salt = New-Object byte[] 32
             $rng = [System.Security.Cryptography.RandomNumberGenerator]::Create()
             $rng.GetBytes($salt)
             
+            # Convert SecureString to plain text for cryptographic operations
+            $passwordPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password)
+            $passwordPlain = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($passwordPtr)
+            $pbkdf2 = New-Object System.Security.Cryptography.Rfc2898DeriveBytes($passwordPlain, $salt, 10000)
+            
+            # Clear password from memory
+            [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($passwordPtr)
             $pbkdf2 = New-Object System.Security.Cryptography.Rfc2898DeriveBytes($Password, $salt, 10000)
             $aes.Key = $pbkdf2.GetBytes(32)
             $aes.GenerateIV()
@@ -264,15 +271,16 @@ function Unprotect-FileWithPassword {
     .SYNOPSIS
         Decrypts an AES-encrypted file
     .DESCRIPTION
-        Decrypts a file that was encrypted with Protect-FileWithPassword
+        Decrypts a file that was encrypted with AES encryption using password-based key derivation
     .PARAMETER FilePath
         Path to encrypted file
     .PARAMETER Password
-        Password used for encryption
+        Password used for encryption (as SecureString)
     .PARAMETER OutputPath
         Optional output path for decrypted file
     .EXAMPLE
-        Unprotect-FileWithPassword -FilePath "C:\secret.txt.encrypted" -Password "MyPassword123"
+        $securePassword = ConvertTo-SecureString "MyPassword123" -AsPlainText -Force
+        Unprotect-FileWithPassword -FilePath "C:\secret.txt.encrypted" -Password $securePassword
     #>
     [CmdletBinding(SupportsShouldProcess)]
     param(
@@ -281,7 +289,7 @@ function Unprotect-FileWithPassword {
         [string]$FilePath,
         
         [Parameter(Mandatory=$true)]
-        [string]$Password,
+        [SecureString]$Password,
         
         [Parameter(Mandatory=$false)]
         [string]$OutputPath
@@ -308,16 +316,21 @@ function Unprotect-FileWithPassword {
             $encryptedBytes = New-Object byte[] ($fileStream.Length - 48)
             $fileStream.Read($encryptedBytes, 0, $encryptedBytes.Length) | Out-Null
             $fileStream.Close()
-            
-            # Create AES decryption
+            # Create AES encryption
             $aes = [System.Security.Cryptography.Aes]::Create()
             $aes.KeySize = 256
             $aes.BlockSize = 128
             $aes.Mode = [System.Security.Cryptography.CipherMode]::CBC
             $aes.IV = $iv
             
-            # Derive key from password
-            $pbkdf2 = New-Object System.Security.Cryptography.Rfc2898DeriveBytes($Password, $salt, 10000)
+            # Derive key from password using PBKDF2
+            # Convert SecureString to plain text for cryptographic operations
+            $passwordPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password)
+            $passwordPlain = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($passwordPtr)
+            $pbkdf2 = New-Object System.Security.Cryptography.Rfc2898DeriveBytes($passwordPlain, $salt, 10000)
+            
+            # Clear password from memory
+            [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($passwordPtr)
             $aes.Key = $pbkdf2.GetBytes(32)
             
             # Decrypt
@@ -495,7 +508,6 @@ function Test-FileDigitalSignature {
                 }
             }
             
-            $fileBytes = [System.IO.File]::ReadAllBytes($FilePath)
             $signatureBytes = [System.IO.File]::ReadAllBytes($signaturePath)
             
             $signedCms = New-Object System.Security.Cryptography.Pkcs.SignedCms

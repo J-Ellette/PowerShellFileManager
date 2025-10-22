@@ -212,30 +212,30 @@ function New-ScriptWorkspace {
                 
                 # Capture streams
                 $script:CurrentRunspace.Streams.Information.Add_DataAdded({
-                    param($sender, $e)
+                    param($streamSender, $e)
                     $outputBox.Dispatcher.Invoke([Action]{
-                        $outputBox.AppendText($sender[$e.Index].ToString() + "`n")
+                        $outputBox.AppendText($streamSender[$e.Index].ToString() + "`n")
                     })
                 })
                 
                 $script:CurrentRunspace.Streams.Error.Add_DataAdded({
-                    param($sender, $e)
+                    param($streamSender, $e)
                     $errorBox.Dispatcher.Invoke([Action]{
-                        $errorBox.AppendText($sender[$e.Index].ToString() + "`n")
+                        $errorBox.AppendText($streamSender[$e.Index].ToString() + "`n")
                     })
                 })
                 
                 $script:CurrentRunspace.Streams.Warning.Add_DataAdded({
-                    param($sender, $e)
+                    param($streamSender, $e)
                     $warningBox.Dispatcher.Invoke([Action]{
-                        $warningBox.AppendText($sender[$e.Index].ToString() + "`n")
+                        $warningBox.AppendText($streamSender[$e.Index].ToString() + "`n")
                     })
                 })
                 
                 $script:CurrentRunspace.Streams.Verbose.Add_DataAdded({
-                    param($sender, $e)
+                    param($streamSender, $e)
                     $verboseBox.Dispatcher.Invoke([Action]{
-                        $verboseBox.AppendText($sender[$e.Index].ToString() + "`n")
+                        $verboseBox.AppendText($streamSender[$e.Index].ToString() + "`n")
                     })
                 })
                 
@@ -328,7 +328,7 @@ function New-ScriptWorkspace {
         
         # F5 key handler for running script
         $window.Add_KeyDown({
-            param($sender, $e)
+            param($eventSender, $e)
             if ($e.Key -eq 'F5') {
                 $runBtn.RaiseEvent((New-Object System.Windows.RoutedEventArgs([System.Windows.Controls.Button]::ClickEvent)))
             }

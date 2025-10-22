@@ -57,9 +57,9 @@ function Enable-AwakeMode {
         return
     }
     
-    $isWindows = $IsWindows -or $PSVersionTable.PSVersion.Major -le 5
+    $isWindowsPlatform = $IsWindows -or $PSVersionTable.PSVersion.Major -le 5
     
-    if ($isWindows) {
+    if ($isWindowsPlatform) {
         # Windows: Use SetThreadExecutionState
         Add-Type -TypeDefinition @'
         using System;
@@ -161,9 +161,9 @@ function Disable-AwakeMode {
         return
     }
     
-    $isWindows = $IsWindows -or $PSVersionTable.PSVersion.Major -le 5
+    $isWindowsPlatform = $IsWindows -or $PSVersionTable.PSVersion.Major -le 5
     
-    if ($isWindows) {
+    if ($isWindowsPlatform) {
         # Reset execution state
         [PowerAPI]::SetThreadExecutionState([PowerAPI]::ES_CONTINUOUS) | Out-Null
     } else {

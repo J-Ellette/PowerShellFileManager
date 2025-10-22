@@ -20,11 +20,13 @@ This document provides a comprehensive summary of the advanced features added to
 **Purpose**: Centralized configuration management with persistence
 
 **Functions**:
+
 - `Get-FileManagerConfig` - Retrieve current configuration
 - `Set-FileManagerConfig` - Update configuration settings
 - `Reset-FileManagerConfig` - Reset to defaults
 
 **Features**:
+
 - JSON-based configuration storage
 - Theme customization
 - UI preferences (window size, split panes, tabs)
@@ -34,6 +36,7 @@ This document provides a comprehensive summary of the advanced features added to
 - Fallback to defaults on load failures
 
 **Configuration Location**:
+
 - Windows: `%APPDATA%\PowerShellFileManager\config.json`
 - Linux/macOS: `~/.config/PowerShellFileManager/config.json`
 
@@ -42,6 +45,7 @@ This document provides a comprehensive summary of the advanced features added to
 **Purpose**: Strongly-typed result classes for consistent UI binding
 
 **Classes**:
+
 - `DirectoryEntry` - File/directory information with formatted sizes
 - `OperationRecord` - Track file operation status and progress
 - `SearchResult` - Search results with match scoring
@@ -51,6 +55,7 @@ This document provides a comprehensive summary of the advanced features added to
 - `PerformanceMetric` - Operation performance data
 
 **Features**:
+
 - Consistent data models across all operations
 - Automatic size formatting (bytes to KB/MB/GB/TB)
 - Status tracking with timestamps
@@ -61,6 +66,7 @@ This document provides a comprehensive summary of the advanced features added to
 **Purpose**: Path normalization, validation, and security
 
 **Functions**:
+
 - `Resolve-NormalizedPath` - Normalize and validate paths
 - `Test-PathTraversal` - Detect path traversal attempts
 - `Test-SafePath` - Comprehensive path safety checks
@@ -69,6 +75,7 @@ This document provides a comprehensive summary of the advanced features added to
 - `Get-ReparsePointTarget` - Get symlink target path
 
 **Features**:
+
 - Path traversal attack detection
 - UNC path handling
 - Disallowed path protection
@@ -82,12 +89,14 @@ This document provides a comprehensive summary of the advanced features added to
 **Purpose**: Safe file deletion with Recycle Bin integration
 
 **Functions**:
+
 - `Remove-ItemToRecycleBin` - Move items to Recycle Bin
 - `Get-RecycleBinItems` - List Recycle Bin contents
 - `Restore-RecycleBinItem` - Restore deleted items
 - `Clear-RecycleBin` - Empty Recycle Bin
 
 **Features**:
+
 - Windows Recycle Bin integration (via Microsoft.VisualBasic.FileIO)
 - Graceful fallback to permanent deletion with confirmation
 - Cross-platform support (with warnings on non-Windows)
@@ -99,11 +108,13 @@ This document provides a comprehensive summary of the advanced features added to
 **Purpose**: File integrity monitoring and secure deletion
 
 **Functions**:
+
 - `Enable-IntegrityMonitoring` - Create integrity baselines
 - `Test-FileIntegrity` - Verify files against baseline
 - `Remove-FileSecurely` - DOD 5220.22-M compliant deletion
 
 **Features**:
+
 - Multiple hash algorithms (MD5, SHA1, SHA256, SHA512)
 - Recursive directory baseline generation
 - Automatic baseline persistence to disk
@@ -114,6 +125,7 @@ This document provides a comprehensive summary of the advanced features added to
 - Pattern-based overwrite (zeros, ones, random)
 
 **Baseline Location**:
+
 - Windows: `%APPDATA%\PowerShellFileManager\Integrity\`
 - Linux/macOS: `~/.config/PowerShellFileManager/Integrity/`
 
@@ -122,6 +134,7 @@ This document provides a comprehensive summary of the advanced features added to
 **Purpose**: Performance tracking and analytics
 
 **Functions**:
+
 - `Start-PerformanceTracking` - Begin tracking an operation
 - `Stop-PerformanceTracking` - End tracking and record metrics
 - `Get-FileManagerMetrics` - Retrieve performance metrics
@@ -131,6 +144,7 @@ This document provides a comprehensive summary of the advanced features added to
 - `Show-PerformanceSummary` - Display formatted summary
 
 **Features**:
+
 - Operation timing with millisecond precision
 - Memory usage tracking
 - Items per second calculation
@@ -147,6 +161,7 @@ This document provides a comprehensive summary of the advanced features added to
 **Purpose**: Register and execute external tools
 
 **Functions**:
+
 - `Register-ExternalTool` - Register a new tool
 - `Invoke-ExternalTool` - Execute tool on files
 - `Get-ExternalTool` - List registered tools
@@ -154,6 +169,7 @@ This document provides a comprehensive summary of the advanced features added to
 - `Unregister-ExternalTool` - Remove tool
 
 **Features**:
+
 - File type associations (by extension)
 - {file} placeholder in commands
 - Execution count tracking
@@ -164,6 +180,7 @@ This document provides a comprehensive summary of the advanced features added to
 - Tool descriptions and metadata
 
 **Registry Location**:
+
 - Windows: `%APPDATA%\PowerShellFileManager\Tools\ExternalTools.json`
 - Linux/macOS: `~/.config/PowerShellFileManager/Tools/ExternalTools.json`
 
@@ -172,11 +189,13 @@ This document provides a comprehensive summary of the advanced features added to
 **Purpose**: System health checks and diagnostics
 
 **Functions**:
+
 - `Get-FileManagerHealth` - Comprehensive health check
 - `Export-DiagnosticData` - Create diagnostic bundle
 - `Test-StartupHealth` - Validate startup conditions
 
 **Features**:
+
 - System resource monitoring (memory, CPU, threads)
 - Module load status verification
 - Disk space monitoring with warnings
@@ -197,9 +216,11 @@ This document provides a comprehensive summary of the advanced features added to
 ### 9. Logging.psm1 (Enhanced)
 
 **New Functions**:
+
 - `Write-Log` - Simplified logging facade
 
 **Enhancements**:
+
 - Correlation ID support via OperationId parameter
 - Level mapping (Trace→Debug, Warn→Warning)
 - Automatic caller detection
@@ -209,11 +230,13 @@ This document provides a comprehensive summary of the advanced features added to
 ### 10. BatchOperations.psm1 (Enhanced)
 
 **New Functions**:
+
 - `New-BatchOperationTemplate` - Create reusable templates
 - `Get-BatchOperationTemplate` - Retrieve templates
 - `Start-ConditionalBatchOperation` - Conditional batch processing
 
 **Enhancements**:
+
 - Operation template system
 - Template persistence to disk
 - Conditional if/then/else logic
@@ -223,18 +246,21 @@ This document provides a comprehensive summary of the advanced features added to
 - Template versioning
 
 **Template Location**:
+
 - Windows: `%APPDATA%\PowerShellFileManager\Templates\`
 - Linux/macOS: `~/.config/PowerShellFileManager/Templates/`
 
 ### 11. SecurityOperations.psm1 (Enhanced)
 
 **New Functions**:
+
 - `Protect-FileWithPassword` - AES-256 encryption
 - `Unprotect-FileWithPassword` - AES decryption
 - `Set-FileDigitalSignature` - Digital signing
 - `Test-FileDigitalSignature` - Signature verification
 
 **Enhancements**:
+
 - AES-256-CBC encryption
 - PBKDF2 key derivation (10,000 iterations)
 - Random salt generation (32 bytes)
@@ -248,6 +274,7 @@ This document provides a comprehensive summary of the advanced features added to
 ## Security Features
 
 ### Encryption
+
 - **Algorithm**: AES-256-CBC
 - **Key Derivation**: PBKDF2 with 10,000 iterations
 - **Salt**: 32 bytes random
@@ -255,12 +282,14 @@ This document provides a comprehensive summary of the advanced features added to
 - **Output Format**: Salt (32) + IV (16) + Encrypted Data
 
 ### Digital Signatures
+
 - **PowerShell Files**: Authenticode signatures
 - **Other Files**: CMS detached signatures (.sig files)
 - **Certificate Support**: X.509 certificates from Windows Certificate Store
 - **Validation**: Full certificate chain verification
 
 ### Secure Deletion
+
 - **Standard**: DOD 5220.22-M
 - **Default Passes**: 3
 - **Recommended**: 7 (DOD standard)
@@ -272,12 +301,14 @@ This document provides a comprehensive summary of the advanced features added to
 ## Performance Considerations
 
 ### Memory Management
+
 - Concurrent dictionaries for thread-safe operations
 - Automatic garbage collection tracking
 - Working set monitoring
 - Memory usage thresholds with warnings (>500MB)
 
 ### Caching
+
 - Template caching in memory
 - Tool registry caching
 - Configuration caching
@@ -285,6 +316,7 @@ This document provides a comprehensive summary of the advanced features added to
 - Metrics caching with configurable limits
 
 ### Optimization
+
 - Batch size optimization (500 items default for incremental loading)
 - Progress reporting at configurable intervals
 - Background operation support
@@ -294,6 +326,7 @@ This document provides a comprehensive summary of the advanced features added to
 ## Cross-Platform Support
 
 ### Windows
+
 - Full GUI feature set
 - Recycle Bin integration
 - COM object support (Shell.Application)
@@ -302,6 +335,7 @@ This document provides a comprehensive summary of the advanced features added to
 - Authenticode signatures
 
 ### Linux
+
 - Command-line features
 - XDG Base Directory support (~/.config)
 - No Recycle Bin (warns and requires confirmation)
@@ -309,6 +343,7 @@ This document provides a comprehensive summary of the advanced features added to
 - Path conversion (Windows → Linux)
 
 ### macOS
+
 - Command-line features
 - XDG Base Directory support (~/.config)
 - No Recycle Bin (warns and requires confirmation)
@@ -322,12 +357,14 @@ This document provides a comprehensive summary of the advanced features added to
 **No Breaking Changes**: All existing code continues to work unchanged.
 
 **New Capabilities Available**:
+
 1. Import new modules individually or rely on automatic loading
 2. Use new functions alongside existing ones
 3. Configuration automatically migrates on first load
 4. Templates, tools, and baselines are opt-in features
 
 **Recommended Updates**:
+
 1. Replace direct file deletion with `Remove-ItemToRecycleBin`
 2. Add integrity monitoring for critical directories
 3. Enable performance tracking for operation analysis
@@ -337,6 +374,7 @@ This document provides a comprehensive summary of the advanced features added to
 ## Best Practices
 
 ### Security
+
 1. Use AES-256 encryption for sensitive files
 2. Always verify digital signatures before execution
 3. Enable integrity monitoring for critical directories
@@ -344,12 +382,14 @@ This document provides a comprehensive summary of the advanced features added to
 5. Sanitize diagnostic data before sharing
 
 ### Performance
+
 1. Track operations to identify bottlenecks
 2. Use conditional batch operations for efficient processing
 3. Clear metrics periodically to manage memory
 4. Export performance reports for long-term analysis
 
 ### Operations
+
 1. Use Recycle Bin for safer deletions
 2. Validate paths before operations
 3. Check for symlinks to avoid recursion
@@ -357,6 +397,7 @@ This document provides a comprehensive summary of the advanced features added to
 5. Monitor disk space regularly
 
 ### Configuration
+
 1. Back up configuration files regularly
 2. Use meaningful template names
 3. Document custom tool configurations
@@ -367,21 +408,25 @@ This document provides a comprehensive summary of the advanced features added to
 ### Common Issues
 
 **Configuration not loading**:
+
 - Check file permissions in config directory
 - Verify JSON syntax in config.json
 - Use `Reset-FileManagerConfig` to start fresh
 
 **Performance degradation**:
+
 - Clear old metrics with `Clear-PerformanceMetrics`
 - Check memory usage with `Get-FileManagerHealth`
 - Reduce cache size in configuration
 
 **Encryption failures**:
+
 - Verify password strength
 - Check available disk space
 - Ensure .NET cryptography is available
 
 **Tool execution fails**:
+
 - Verify tool path is accessible
 - Check file type associations
 - Review tool execution count and errors
@@ -413,6 +458,7 @@ These features are not currently prioritized but may be added based on user feed
 ## Support and Contribution
 
 For issues, questions, or contributions:
+
 - **GitHub Issues**: Report bugs and request features
 - **GitHub Discussions**: Ask questions and share ideas
 - **Pull Requests**: Contribute code improvements

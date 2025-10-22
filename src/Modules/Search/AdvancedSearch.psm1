@@ -1146,10 +1146,10 @@ function Save-SearchHistory {
     }
 }
 
-function Load-SearchHistory {
+function Import-SearchHistory {
     <#
     .SYNOPSIS
-        Loads search history from persistent storage
+        Imports search history from persistent storage
     .DESCRIPTION
         Restores search history from JSON file
     #>
@@ -1171,11 +1171,11 @@ function Load-SearchHistory {
             foreach ($entry in $historyData) {
                 $script:SearchHistory.Add($entry) | Out-Null
             }
-            Write-Verbose "Loaded $($script:SearchHistory.Count) search history entries"
+            Write-Verbose "Imported $($script:SearchHistory.Count) search history entries"
         }
         
     } catch {
-        Write-Verbose "Error loading search history: $($_.Exception.Message)"
+        Write-Verbose "Error importing search history: $($_.Exception.Message)"
     }
 }
 
@@ -1207,22 +1207,23 @@ function Get-SearchSuggestions {
         [int]$MaxSuggestions = 10,
         
         [Parameter(Mandatory=$false)]
-        [switch]$IncludeHistory = $true,
+        [switch]$IncludeHistory,
         
         [Parameter(Mandatory=$false)]
-        [switch]$IncludePatterns = $true
+        [switch]$IncludePatterns
     )
     
     try {
-        # Load history if not already loaded
+        # Import history if not already loaded
         if ($script:SearchHistory.Count -eq 0) {
-            Load-SearchHistory
+            Import-SearchHistory
         }
         
         $suggestions = @()
         
-        # History-based suggestions
-        if ($IncludeHistory -and $script:SearchHistory.Count -gt 0) {
+        # History-based suggestions (default to true if not specified)
+        $includeHistoryValue = if ($PSBoundParameters.ContainsKey('IncludeHistory')) { $IncludeHistory } else { $true }
+        if ($includeHistoryValue -and $script:SearchHistory.Count -gt 0) {
             $historySuggestions = $script:SearchHistory | 
                 Where-Object { 
                     if ($PartialQuery) {
@@ -1244,9 +1245,9 @@ function Get-SearchSuggestions {
                 }
             $suggestions += $historySuggestions
         }
-        
-        # Pattern-based suggestions
-        if ($IncludePatterns) {
+        # Pattern-based suggestions (default to true if not specified)
+        $includePatternsValue = if ($PSBoundParameters.ContainsKey('IncludePatterns')) { $IncludePatterns } else { $true }
+        if ($includePatternsValue) {
             $patternSuggestions = @()
             
             # Common file patterns
@@ -1517,7 +1518,7 @@ function Get-FuzzyMatch {
 }
 
 # Initialize search history on module load
-Load-SearchHistory
+Import-SearchHistory
 
 Export-ModuleMember -Function Search-Files, Search-Content, Get-FuzzyMatch, Save-SearchQuery, Get-SavedSearches, 
                               Update-FileIndex, Search-IndexedFiles, Get-FileIndexStatistics, 

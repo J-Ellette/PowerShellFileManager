@@ -361,7 +361,7 @@ function Save-ToolRegistry {
     }
 }
 
-function Load-ToolRegistry {
+function Import-ToolRegistry {
     try {
         $configDir = if ($IsWindows -or $PSVersionTable.PSVersion.Major -lt 6) {
             Join-Path $env:APPDATA "PowerShellFileManager\Tools"
@@ -378,15 +378,15 @@ function Load-ToolRegistry {
                 $script:ExternalTools[$tool.Name] = $tool
             }
             
-            Write-Verbose "Loaded $($tools.Count) external tools"
+            Write-Verbose "Imported $($tools.Count) external tools"
         }
     }
     catch {
-        Write-Warning "Failed to load tool registry: $_"
+        Write-Warning "Failed to import tool registry: $_"
     }
 }
 
-# Auto-load tools on module import
-Load-ToolRegistry
+# Auto-import tools on module import
+Import-ToolRegistry
 
 Export-ModuleMember -Function Register-ExternalTool, Invoke-ExternalTool, Get-ExternalTool, Unregister-ExternalTool, Update-ExternalTool

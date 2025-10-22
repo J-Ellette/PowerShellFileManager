@@ -2,7 +2,6 @@
 
 ## Complete Menu Hierarchy
 
-```
 ┌─────────────────────────────────────────────────────────────┐
 │ PowerShell File Manager V2.0                                │
 ├─────────────────────────────────────────────────────────────┤
@@ -60,7 +59,6 @@ TOOLS MENU
 HELP MENU
 ├── ℹ️  About                                 [EXISTING]
 └── 📖 Documentation                          [EXISTING - ADDED HANDLER ✨]
-```
 
 ## Legend
 
@@ -71,6 +69,7 @@ HELP MENU
 ## What Changed
 
 ### Previously Missing Handlers (Now Added)
+
 1. ✅ MenuBatchOps - Opens batch operations for selected files
 2. ✅ MenuSyncDirs - Directory synchronization with folder browser
 3. ✅ MenuConnect - FTP/SFTP connection dialog
@@ -78,6 +77,7 @@ HELP MENU
 5. ✅ MenuDocs - Opens README.md documentation
 
 ### Newly Added Menus & Handlers
+
 1. ✅ Archive Operations submenu (3 items)
    - Create Archive - ZIP/TAR/7Z creation
    - Extract Archive - Archive extraction
@@ -105,9 +105,11 @@ HELP MENU
    - Advanced Search - Fuzzy and regex search
 
 ### Removed Features
+
 - ❌ Task Manager - Removed per requirements (functionality and menu entry)
 
 ## Total Changes
+
 - **18 new menu items** added (10 PowerToys + 8 others)
 - **3 new submenus** created (Archive Operations, Security, PowerToys)
 - **5 existing menu items** now have working handlers
@@ -115,6 +117,7 @@ HELP MENU
 - **1 feature removed** (Task Manager)
 
 ## Code Changes
+
 - Only 1 file modified: `src/Scripts/Start-FileManager.ps1`
 - Lines added: ~800 lines of XAML menu definitions and event handler code
 - No breaking changes to existing functionality

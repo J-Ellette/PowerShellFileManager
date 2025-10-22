@@ -7,19 +7,25 @@ This document outlines all features available in the PowerShell File Manager V2.
 All 15 features mentioned in the problem statement are now available through the GUI:
 
 ### 1. ✅ Archive Operations
+
 **Location:** Operations > Archive Operations
+
 - **Create Archive** - Create ZIP, TAR, or 7Z archives from selected files
 - **Extract Archive** - Extract archive contents to a destination folder
 - **View Archive Contents** - View files contained in an archive
 
 ### 2. ✅ Security Operations
+
 **Location:** Tools > Security
+
 - **View File ACL** - Display Access Control Lists for files/folders
 - **Edit File ACL** - Modify permissions for users and groups
 - **Secure Delete** - Securely delete files with overwrite
 
 ### 3. ✅ PowerToys Integration
+
 **Location:** Tools > PowerToys
+
 - **Image Resizer** - Batch image processing with resize and format conversion
 - **Text Extractor (OCR)** - Extract text from images and screen captures
 - **Color Picker** - Pick colors from screen with format conversion
@@ -32,81 +38,104 @@ All 15 features mentioned in the problem statement are now available through the
 - **PowerRename** - Advanced batch renaming with regex support
 
 ### 4. ✅ Git Integration
+
 **Location:** Tools > Git Status
+
 - View git status for the current directory
 - See modified, staged, and untracked files
 
 ### 5. ✅ Network Operations
+
 **Location:** Tools > Connect FTP/SFTP
+
 - Connect to FTP servers
 - Connect to SFTP servers
 - Manage remote file transfers
 
 ### 6. ✅ Object Inspection
+
 **Location:** View > Object Inspector
+
 - View all properties and metadata of files
 - Inspect PowerShell objects
 - Filter and search properties
 
 ### 7. ✅ Metadata Editing
+
 **Location:** Tools > Metadata Editor
+
 - Edit file attributes (ReadOnly, Hidden, Archive, System)
 - Modify file properties
 - Bulk metadata operations
 
 ### 8. ✅ Search Operations
+
 **Location:** Operations > Advanced Search
+
 - Fuzzy search with Levenshtein distance
 - Regex pattern matching
 - Content search within files
 - Saved searches and search history
 
 ### 9. ✅ Directory Synchronization
+
 **Location:** Operations > Sync Directories
+
 - Compare source and destination directories
 - Sync files with WhatIf preview
 - Intelligent file comparison
 
 ### 10. ✅ File Analysis
+
 **Location:** Operations > Disk Space Analyzer
+
 - Analyze disk usage by directory
 - Visual breakdown of folder sizes
 - Identify large files and directories
 
 ### 11. ✅ Batch Operations
+
 **Location:** Operations > Batch Operations
+
 - Queue-based batch file operations
 - Copy, Move, Delete, Rename operations
 - Progress tracking and pause/resume controls
 
 ### 12. ✅ Find Duplicate Files
+
 **Location:** Operations > Find Duplicates
+
 - Find duplicates by hash (MD5/SHA256)
 - Find duplicates by name or size
 - Progress tracking for large scans
 
 ### 13. ✅ Script Workspace
+
 **Location:** File > Script Workspace
+
 - Dedicated PowerShell script editor
 - Syntax highlighting
 - Execute scripts directly
 
 ### 14. ✅ Build Queries Visually
+
 **Location:** File > Query Builder
+
 - Visual query builder for file searches
 - Add multiple filter conditions
 - Generate PowerShell commands
 - Save and load queries
 
 ### 15. ✅ Use Command Palette
+
 **Location:** File > Command Palette (Ctrl+P)
+
 - Quick access to all commands
 - Natural language command interpretation
 - Keyboard-driven navigation
 
 ## Menu Structure
 
-```
 File
 ├── Open Command Palette (Ctrl+P)
 ├── Query Builder
@@ -153,11 +182,11 @@ Tools
 Help
 ├── About
 └── Documentation
-```
 
 ## Toolbar Buttons
 
 The toolbar provides quick access to commonly used features:
+
 - **← Back / Forward →** - Navigate through directory history
 - **↑ Up** - Go to parent directory
 - **🔍 Command Palette (Ctrl+P)** - Open command palette
@@ -176,6 +205,7 @@ The toolbar provides quick access to commonly used features:
 ## Implementation Details
 
 All new features were added by:
+
 1. Creating menu items in the XAML interface
 2. Adding event handlers that call existing PowerShell module functions
 3. Providing appropriate user feedback through message boxes and console output
@@ -184,6 +214,7 @@ All new features were added by:
 ## Module Functions Used
 
 The GUI integrates the following PowerShell modules:
+
 - `ArchiveOperations.psm1` - Archive creation and extraction
 - `SecurityOperations.psm1` - ACL management and secure delete
 - `GitIntegration.psm1` - Git status display

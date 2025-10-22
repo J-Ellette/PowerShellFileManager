@@ -34,7 +34,7 @@ function New-Archive {
         [string]$Format = 'ZIP',
         
         [Parameter(Mandatory=$false)]
-        [string]$Password
+        [SecureString]$Password
     )
     
     Write-Host "Creating $Format archive..." -ForegroundColor Cyan
@@ -83,7 +83,7 @@ function Expand-Archive {
         [string]$Destination,
         
         [Parameter(Mandatory=$false)]
-        [string]$Password
+        [SecureString]$Password
     )
     
     if (-not (Test-Path $Path)) {

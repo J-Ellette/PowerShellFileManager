@@ -149,7 +149,7 @@ function Test-FileIntegrity {
     try {
         if (-not $script:IntegrityBaselines.ContainsKey($Path)) {
             # Try loading from disk
-            $loaded = Load-IntegrityBaseline -Path $Path
+            $loaded = Import-IntegrityBaseline -Path $Path
             if (-not $loaded) {
                 Write-Error "No baseline found for path: $Path"
                 return
@@ -243,7 +243,7 @@ function Save-IntegrityBaseline {
     }
 }
 
-function Load-IntegrityBaseline {
+function Import-IntegrityBaseline {
     param($Path)
     
     try {

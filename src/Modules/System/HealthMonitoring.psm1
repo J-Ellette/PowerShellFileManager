@@ -63,10 +63,9 @@ function Get-FileManagerHealth {
         $diskWarnings = @()
         
         if ($IsWindows -or $PSVersionTable.PSVersion.Major -lt 6) {
-            $drives = Get-PSDrive -PSProvider FileSystem | Where-Object { $_.Used -ne $null }
+            $drives = Get-PSDrive -PSProvider FileSystem | Where-Object { $null -ne $_.Used }
             foreach ($drive in $drives) {
                 $freeSpaceGB = [Math]::Round($drive.Free / 1GB, 2)
-                $totalSpaceGB = [Math]::Round(($drive.Used + $drive.Free) / 1GB, 2)
                 $percentFree = [Math]::Round(($drive.Free / ($drive.Used + $drive.Free)) * 100, 1)
                 
                 if ($percentFree -lt 10) {
@@ -77,6 +76,7 @@ function Get-FileManagerHealth {
             $healthReport.DiskSpace = $drives | Select-Object Name, 
                 @{Name="UsedGB"; Expression={[Math]::Round($_.Used / 1GB, 2)}},
                 @{Name="FreeGB"; Expression={[Math]::Round($_.Free / 1GB, 2)}},
+                @{Name="TotalGB"; Expression={[Math]::Round(($_.Used + $_.Free) / 1GB, 2)}},
                 @{Name="PercentFree"; Expression={[Math]::Round(($_.Free / ($_.Used + $_.Free)) * 100, 1)}}
         }
         else {
@@ -193,13 +193,13 @@ function Export-DiagnosticData {
         [string]$OutputPath,
         
         [Parameter(Mandatory=$false)]
-        [switch]$IncludeLogs = $true,
+        [switch]$IncludeLogs,
         
         [Parameter(Mandatory=$false)]
-        [switch]$IncludeMetrics = $true,
+        [switch]$IncludeMetrics,
         
         [Parameter(Mandatory=$false)]
-        [switch]$SanitizeSensitiveData = $true
+        [switch]$SanitizeSensitiveData
     )
     
     try {
@@ -233,7 +233,7 @@ function Export-DiagnosticData {
         if (Get-Command Get-FileManagerConfig -ErrorAction SilentlyContinue) {
             $config = Get-FileManagerConfig
             
-            if ($SanitizeSensitiveData) {
+            if ($SanitizeSensitiveData -or $PSBoundParameters.Count -eq 1) {
                 # Sanitize paths and sensitive data
                 $config.ConfigPath = "REDACTED"
             }
@@ -242,7 +242,7 @@ function Export-DiagnosticData {
         }
         
         # Collect logs
-        if ($IncludeLogs) {
+        if ($IncludeLogs -or $PSBoundParameters.Count -eq 1) {
             Write-Verbose "Collecting logs..."
             $logPath = if ($IsWindows -or $PSVersionTable.PSVersion.Major -lt 6) {
                 Join-Path $env:APPDATA "PowerShellFileManager\Logs"
@@ -259,7 +259,7 @@ function Export-DiagnosticData {
                     Sort-Object LastWriteTime -Descending |
                     Select-Object -First 5 |
                     ForEach-Object {
-                        if ($SanitizeSensitiveData) {
+                        if ($SanitizeSensitiveData -or $PSBoundParameters.Count -eq 1) {
                             # Sanitize log content
                             $content = Get-Content $_.FullName
                             $sanitized = $content -replace '([A-Z]:\\[^\\]+)', 'C:\REDACTED' `
@@ -275,7 +275,7 @@ function Export-DiagnosticData {
         }
         
         # Collect metrics
-        if ($IncludeMetrics -and (Get-Command Get-FileManagerMetrics -ErrorAction SilentlyContinue)) {
+        if (($IncludeMetrics -or $PSBoundParameters.Count -eq 1) -and (Get-Command Get-FileManagerMetrics -ErrorAction SilentlyContinue)) {
             Write-Verbose "Collecting performance metrics..."
             $metrics = Get-FileManagerMetrics -Last 100
             $metrics | ConvertTo-Json -Depth 10 | Set-Content -Path (Join-Path $tempDir "PerformanceMetrics.json") -Encoding UTF8
@@ -303,7 +303,7 @@ function Export-DiagnosticData {
             Success = $true
             OutputPath = $OutputPath
             Size = (Get-Item $OutputPath).Length
-            ContainsSensitiveData = -not $SanitizeSensitiveData
+            ContainsSensitiveData = -not ($SanitizeSensitiveData -or $PSBoundParameters.Count -eq 1)
         }
     }
     catch {

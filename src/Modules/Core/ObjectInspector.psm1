@@ -249,11 +249,15 @@ function Show-ObjectInspector {
         # Refresh button handler
         $refreshBtn.Add_Click({
             if ($Path) {
-                $Object = Get-Item -Path $Path
+                $script:Object = Get-Item -Path $Path
             }
             $allProperties = & $LoadProperties
             $propertiesGrid.ItemsSource = $allProperties
             $filterBox.Text = ""
+            
+            # Update object info display
+            $objectName.Text = if ($script:Object.Name) { $script:Object.Name } else { $script:Object.ToString() }
+            $objectType.Text = "Type: $($script:Object.GetType().FullName)"
         })
         
         # Close button handler
@@ -263,7 +267,7 @@ function Show-ObjectInspector {
         
         # Handle property cell editing
         $propertiesGrid.Add_CellEditEnding({
-            param($sender, $e)
+            param($eventSender, $e)
             if ($e.EditAction -eq 'Commit') {
                 $property = $e.Row.Item
                 $newValue = $e.EditingElement.Text

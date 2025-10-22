@@ -452,41 +452,6 @@ function Show-WindowPinIndicator {
     Write-Host ""
 }
 
-# Back-compat function for previous unapproved verb name (proxy to Switch-WindowAlwaysOnTop)
-function Toggle-WindowAlwaysOnTop {
-    <#
-    .SYNOPSIS
-        Toggles the always on top status of a window (backward compatibility wrapper)
-
-    .DESCRIPTION
-        This is a backward compatibility wrapper for Switch-WindowAlwaysOnTop.
-        All parameters are passed through to the Switch function.
-    #>
-    [CmdletBinding(DefaultParameterSetName='Current')]
-    param(
-        [Parameter(ParameterSetName='Handle', Mandatory=$true)]
-        [IntPtr]$WindowHandle,
-
-        [Parameter(ParameterSetName='ProcessId')]
-        [int]$ProcessId,
-
-        [Parameter(ParameterSetName='Title')]
-        [string]$WindowTitle,
-        
-        [Parameter()]
-        [ValidateSet('Like','Exact')]
-        [string]$TitleMatch = 'Like'
-    )
-
-    # Forward all parameters to Switch-WindowAlwaysOnTop
-    $params = @{}
-    if ($PSBoundParameters.ContainsKey('WindowHandle')) { $params['WindowHandle'] = $WindowHandle }
-    if ($PSBoundParameters.ContainsKey('ProcessId')) { $params['ProcessId'] = $ProcessId }
-    if ($PSBoundParameters.ContainsKey('WindowTitle')) { $params['WindowTitle'] = $WindowTitle }
-    if ($PSBoundParameters.ContainsKey('TitleMatch')) { $params['TitleMatch'] = $TitleMatch }
-
-    Switch-WindowAlwaysOnTop @params
-}
 
 # Export module members
 Export-ModuleMember -Function Set-WindowAlwaysOnTop, Switch-WindowAlwaysOnTop, `

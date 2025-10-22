@@ -430,6 +430,7 @@ Get-Command *Archive*
 ## 🔧 Configuration
 
 Module config is stored at:
+
 - Windows: `$env:APPDATA\PowerShellFileManager`
 - Linux: `~/.config/PowerShellFileManager`
 

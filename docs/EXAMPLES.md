@@ -380,5 +380,5 @@ Write-Host "`nDownloads folder organized!"
 
 ---
 
-These examples demonstrate the power and flexibility of PowerShell File Manager V2.0. 
+These examples demonstrate the power and flexibility of PowerShell File Manager V2.0.
 Modify them to suit your specific needs!

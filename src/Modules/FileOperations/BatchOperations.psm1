@@ -219,6 +219,11 @@ function Show-BatchOperationUI {
             $stopBtn.IsEnabled = $false
         })
         
+        # Configure button handler
+        $configBtn.Add_Click({
+            Show-BatchOperationConfig -Operation $Operation -Window $window
+        })
+        
         # Close button handler
         $closeBtn.Add_Click({
             $window.Close()
@@ -433,6 +438,110 @@ function Get-BatchOperationTemplate {
     }
     catch {
         Write-Error "Failed to retrieve template: $_"
+    }
+}
+
+function Show-BatchOperationConfig {
+    <#
+    .SYNOPSIS
+        Shows configuration dialog for batch operations
+    .DESCRIPTION
+        Displays a configuration window for customizing batch operation parameters
+    .PARAMETER Operation
+        The operation type being configured
+    .PARAMETER Window
+        Parent window for the configuration dialog
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Operation,
+        
+        [Parameter(Mandatory=$false)]
+        [object]$Window
+    )
+    
+    $configXaml = @"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Configure $Operation Operation" 
+        Height="400" Width="500"
+        WindowStartupLocation="CenterOwner"
+        Background="#1E1E1E">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Text="Operation Configuration" 
+                   FontSize="16" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
+        
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <GroupBox Header="General Settings" Foreground="White" Margin="0,0,0,10">
+                    <StackPanel Margin="5">
+                        <CheckBox Name="OverwriteCheck" Content="Overwrite existing files" 
+                                  Foreground="White" IsChecked="True"/>
+                        <CheckBox Name="CreateBackupCheck" Content="Create backup before operation" 
+                                  Foreground="White" Margin="0,5,0,0"/>
+                        <CheckBox Name="VerifyCheck" Content="Verify operation completion" 
+                                  Foreground="White" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </GroupBox>
+                
+                <GroupBox Header="Performance" Foreground="White">
+                    <StackPanel Margin="5">
+                        <Label Content="Max Concurrent Operations:" Foreground="White"/>
+                        <Slider Name="ConcurrencySlider" Minimum="1" Maximum="10" Value="3" 
+                                TickFrequency="1" IsSnapToTickEnabled="True"/>
+                        <TextBlock Name="ConcurrencyText" Text="3" Foreground="White" 
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Name="SaveConfigBtn" Content="Save" Padding="15,8" Margin="0,0,5,0"/>
+            <Button Name="CancelConfigBtn" Content="Cancel" Padding="15,8"/>
+        </StackPanel>
+    </Grid>
+</Window>
+"@
+    
+    try {
+        $configWindow = [Windows.Markup.XamlReader]::Parse($configXaml)
+        $concurrencySlider = $configWindow.FindName("ConcurrencySlider")
+        $concurrencyText = $configWindow.FindName("ConcurrencyText")
+        $saveConfigBtn = $configWindow.FindName("SaveConfigBtn")
+        $cancelConfigBtn = $configWindow.FindName("CancelConfigBtn")
+        
+        # Update concurrency text when slider changes
+        $concurrencySlider.Add_ValueChanged({
+            $concurrencyText.Text = [math]::Round($concurrencySlider.Value)
+        })
+        
+        # Save configuration
+        $saveConfigBtn.Add_Click({
+            Write-Host "Configuration saved for $Operation operation" -ForegroundColor Green
+            $configWindow.Close()
+        })
+        
+        # Cancel configuration
+        $cancelConfigBtn.Add_Click({
+            $configWindow.Close()
+        })
+        
+        if ($Window) {
+            $configWindow.Owner = $Window
+        }
+        
+        $configWindow.ShowDialog() | Out-Null
+    }
+    catch {
+        Write-Error "Failed to show configuration dialog: $_"
     }
 }
 

@@ -43,6 +43,7 @@ Start-FileManager
 ```
 
 This will open the main file manager window with:
+
 - Menu bar (File, View, Operations, Tools, Help)
 - Toolbar with quick access buttons
 - Address bar for path navigation
@@ -126,6 +127,7 @@ Or click "Query Builder" in the toolbar.
 ### Example Queries
 
 **Find large PDF files:**
+
 - Property: Extension
 - Operator: Equals
 - Value: .pdf
@@ -137,6 +139,7 @@ AND
 - Value: 10485760 (10MB)
 
 **Find recently modified images:**
+
 - Property: Extension
 - Operator: Equals
 - Value: .jpg
@@ -274,6 +277,7 @@ Start-RunspaceManager
 ```
 
 Features:
+
 - View active runspaces
 - Create new runspaces
 - Import modules

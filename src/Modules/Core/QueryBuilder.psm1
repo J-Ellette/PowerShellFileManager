@@ -162,7 +162,7 @@ function New-QueryBuilder {
         
         # Load Query button handler
         $loadQueryBtn.Add_Click({
-            $query = Load-Query
+            $query = Import-Query
             if ($query) {
                 $generatedQuery.Text = $query
             }
@@ -386,10 +386,10 @@ function Save-Query {
     }
 }
 
-function Load-Query {
+function Import-Query {
     $openDialog = New-Object System.Windows.Forms.OpenFileDialog
     $openDialog.Filter = "PowerShell Query (*.psq)|*.psq|All Files (*.*)|*.*"
-    $openDialog.Title = "Load Query"
+    $openDialog.Title = "Import Query"
     
     if ($openDialog.ShowDialog() -eq 'OK') {
         return Get-Content -Path $openDialog.FileName -Raw

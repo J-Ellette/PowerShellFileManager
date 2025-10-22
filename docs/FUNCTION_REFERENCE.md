@@ -20,6 +20,7 @@ New-OperationRecord                # Create OperationRecord for tracking
 ```
 
 **Classes Available**:
+
 - `DirectoryEntry` - File/directory information
 - `OperationRecord` - Operation tracking
 - `SearchResult` - Search results with scoring
@@ -121,6 +122,7 @@ Remove-SecureFile                 # Secure deletion (existing)
 ## Function Categories
 
 ### Security Functions (11 total)
+
 - File encryption/decryption (2)
 - Digital signatures (2)
 - Integrity monitoring (3)
@@ -128,16 +130,19 @@ Remove-SecureFile                 # Secure deletion (existing)
 - Secure deletion (2)
 
 ### Performance & Monitoring (8 total)
+
 - Performance tracking (7)
 - Health monitoring (3)
 - Diagnostics (1)
 
 ### File Operations (9 total)
+
 - Recycle Bin operations (4)
 - Batch operations (3)
 - Path validation (6)
 
 ### Configuration & Tools (8 total)
+
 - Configuration management (3)
 - External tools (5)
 - Logging enhancements (1)
@@ -155,6 +160,7 @@ Remove-SecureFile                 # Secure deletion (existing)
 ## Common Usage Patterns
 
 ### Secure File Handling
+
 ```powershell
 # Encrypt → Process → Decrypt
 Protect-FileWithPassword -FilePath "data.txt" -Password "pass"
@@ -167,6 +173,7 @@ Test-FileDigitalSignature -FilePath "script.ps1"
 ```
 
 ### Performance Tracking
+
 ```powershell
 # Track → Execute → Stop → Analyze
 $tracker = Start-PerformanceTracking -Operation "BatchCopy"
@@ -176,6 +183,7 @@ Show-PerformanceSummary
 ```
 
 ### Safe Operations
+
 ```powershell
 # Validate → Execute → Verify
 if (Test-SafePath -Path $userInput) {
@@ -184,6 +192,7 @@ if (Test-SafePath -Path $userInput) {
 ```
 
 ### Integrity Monitoring
+
 ```powershell
 # Baseline → Monitor → Verify
 Enable-IntegrityMonitoring -Path "C:\Critical" -Algorithm SHA256
@@ -192,6 +201,7 @@ Test-FileIntegrity -Path "C:\Critical"
 ```
 
 ### Health Checks
+
 ```powershell
 # Check → Diagnose → Export
 $health = Get-FileManagerHealth
@@ -205,6 +215,7 @@ if ($health.OverallStatus -ne "Healthy") {
 ## Parameter Patterns
 
 ### Common Parameters
+
 - `-Path` / `-FilePath` - File or directory path
 - `-Password` - Encryption password
 - `-Algorithm` - Hash algorithm (MD5, SHA1, SHA256, SHA512)
@@ -215,7 +226,9 @@ if ($health.OverallStatus -ne "Healthy") {
 - `-Verbose` - Detailed output
 
 ### Return Objects
+
 Most functions return `PSCustomObject` with:
+
 - `Success` (bool) - Operation success status
 - `Error` (string) - Error message if failed
 - Additional properties specific to the operation

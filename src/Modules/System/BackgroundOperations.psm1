@@ -799,7 +799,8 @@ function Start-EnhancedBackgroundCopy {
                             
                             # Report progress every 10 files or 5MB
                             if (($processedFiles % 10 -eq 0) -or ($processedSize % (5MB) -lt $file.Length)) {
-                                # Progress reporting would be handled by the calling context
+                                # Progress reporting - output progress data for external monitoring
+                                Write-Verbose "Progress: $percentage% ($processedFiles/$totalFiles files, $([Math]::Round($processedSize/1MB,1))/$([Math]::Round($totalSize/1MB,1)) MB, Speed: $([Math]::Round($speed/1MB,1)) MB/s, ETA: $eta)"
                             }
                             
                         } catch {

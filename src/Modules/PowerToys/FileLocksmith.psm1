@@ -146,15 +146,15 @@ function Get-FileLock {
 
             $out = @()
             foreach ($info in $arr) {
-                $pid = $info.Process.dwProcessId
-                $p = Get-Process -Id $pid -ErrorAction SilentlyContinue
+                $processId = $info.Process.dwProcessId
+                $p = Get-Process -Id $processId -ErrorAction SilentlyContinue
                 if (-not $p) { continue }
                 $procPath = $null; try { $procPath = $p.Path } catch {}
                 $start = $null; try { $start = $p.StartTime } catch {}
                 $ws = $null; try { $ws = $p.WorkingSet64 } catch {}
                 $name = if ([string]::IsNullOrWhiteSpace($info.strAppName)) { $p.ProcessName } else { $info.strAppName }
                 $obj = [pscustomobject]@{
-                    ProcessId       = $pid
+                    ProcessId       = $processId
                     ProcessName     = $name
                     ProcessPath     = $procPath
                     ApplicationType = $info.ApplicationType.ToString()

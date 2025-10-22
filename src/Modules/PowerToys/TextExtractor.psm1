@@ -52,9 +52,9 @@ function Get-TextFromImage {
     )
     
     begin {
-        $isWindows = $IsWindows -or $PSVersionTable.PSVersion.Major -le 5
+        $isWindowsOS = $IsWindows -or $PSVersionTable.PSVersion.Major -le 5
         
-        if ($isWindows) {
+        if ($isWindowsOS) {
             # Try to load Windows OCR
             try {
                 Add-Type -AssemblyName System.Runtime.WindowsRuntime
@@ -87,7 +87,7 @@ function Get-TextFromImage {
                 $file = Get-Item -Path $imgPath -ErrorAction Stop
                 Write-Verbose "Processing: $($file.Name)"
                 
-                if ($isWindows -and $hasWindowsOcr) {
+                if ($isWindowsOS -and $hasWindowsOcr) {
                     # Use Windows OCR
                     $ocrEngine = [Windows.Media.Ocr.OcrEngine]::TryCreateFromLanguage(
                         [Windows.Globalization.Language]::new($Language)
@@ -113,6 +113,12 @@ function Get-TextFromImage {
                     # Use tesseract
                     $tempOutput = [System.IO.Path]::GetTempFileName()
                     $result = & tesseract $file.FullName $tempOutput -l $Language 2>&1
+                    
+                    # Check for tesseract errors
+                    if ($LASTEXITCODE -ne 0) {
+                        throw "Tesseract OCR failed: $($result -join ' ')"
+                    }
+                    
                     $text = Get-Content "$tempOutput.txt" -Raw -ErrorAction SilentlyContinue
                     Remove-Item "$tempOutput.txt" -ErrorAction SilentlyContinue
                     Remove-Item $tempOutput -ErrorAction SilentlyContinue

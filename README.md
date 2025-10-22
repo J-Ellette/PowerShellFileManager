@@ -8,8 +8,7 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 ![Platform](https://img.shields.io/badge/platform-Linux-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-macOS-blue.svg)
 
-
-##  Features
+## Features
 
 ### Command-Centric Design
 
@@ -28,7 +27,7 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 - ✅ **EXIF/ID3 Support**: Rich metadata for images and media files
 - ✅ **Comprehensive File Indexing**: Lightning-fast metadata caching with automatic refresh cycles
 
-###  Advanced Search Capabilities
+### Advanced Search Capabilities
 
 - ✅ **Fuzzy Search**: Industry-standard Levenshtein distance algorithm for typo-tolerant searching
 - ✅ **Intelligent Search Suggestions**: AI-powered suggestions based on search history and file patterns
@@ -39,7 +38,7 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 - ✅ **Performance Optimized**: Sub-millisecond search results using cached file indexes
 - ✅ **Similarity Scoring**: Configurable match thresholds with real-time confidence percentages
 
-###  High-Performance Operations
+### High-Performance Operations
 
 - ✅ **Enhanced Background Operations**: Professional-grade async file operations with runspace pooling
 - ✅ **Robocopy Integration**: Enterprise-level file copying with progress tracking and reliability
@@ -48,7 +47,7 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 - ✅ **Operation Queue**: Visual queue with pause/resume controls and detailed status monitoring
 - ✅ **Smart Resource Management**: Automatic cleanup and memory optimization for long-running operations
 
-###  Caching & Performance
+### Caching & Performance
 
 - ✅ **Intelligent File Indexing**: Comprehensive metadata caching for instant search results
 - ✅ **Concurrent Dictionary Storage**: Thread-safe, high-performance data structures
@@ -57,7 +56,7 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 - ✅ **Performance Analytics**: Up to 10x faster searches on large directory structures
 - ✅ **Cache Statistics**: Detailed metrics on hit rates, coverage, and memory usage
 
-### Batch Operations
+### Advanced Batch Operations
 
 - ✅ **Template-Based Actions**: Pre-built operation templates for common tasks
 - ✅ **Multi-Step Workflows**: Chain operations with conditional logic
@@ -86,7 +85,7 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 - ✅ **Directory synchronization** with intelligent comparison and WhatIf preview
 - ✅ **Enhanced file preview** for 15+ formats with rich metadata extraction
 
-###  Enhanced File Preview System
+### Enhanced File Preview System
 
 - ✅ **Multi-Format Support**: Preview documents (.docx), spreadsheets (.xlsx), PDFs, videos (.mp4/.avi/.mkv), audio (.mp3/.wav/.flac), SVG graphics, Markdown files, STL 3D models, and G-code
 - ✅ **Smart Format Detection**: Automatic file type detection with specialized handlers for each format
@@ -106,7 +105,7 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 - ✅ **Natural Language Commands**: "preview svg", "preview markdown", "preview 3d model", "preview gcode", etc.
 - ✅ **Error Handling**: Comprehensive error messages with helpful tips for installing optional dependencies
 
-###  PowerToys Integration
+### PowerToys Integration
 
 - ✅ **File Locksmith**: Identify which processes are locking files using Windows Restart Manager AP
 - ✅ **Always On Top**: Pin any window to stay on top of all other windows using Windows API
@@ -149,19 +148,22 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 - ✅ **Enhanced security features** with file encryption/decryption and digital signatures
 - ✅ **Backup & recovery** with automatic backup before destructive operations and undo capabilities
 
-#### Configuration Management
+#### Configuration & Settings Management
+
 - ✅ **Centralized configuration** with FileManagerConfig class
 - ✅ **Persistent settings** saved to JSON with automatic loading
 - ✅ **Theme customization** and UI preferences
 - ✅ **Key binding management** and preview settings
 
 #### Performance & Monitoring
+
 - ✅ **Performance metrics** tracking operation times and memory usage
 - ✅ **Operation statistics** with execution counts and averages
 - ✅ **Performance reports** exportable to JSON/CSV
 - ✅ **Resource profiling** for bottleneck identification
 
 #### File Integrity & Security
+
 - ✅ **File integrity monitoring** with baseline hash generation
 - ✅ **Secure file deletion** (DOD 5220.22-M compliant)
 - ✅ **AES-256 file encryption** with password protection
@@ -169,36 +171,41 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 - ✅ **Integrity verification** against stored baselines
 
 #### Smart Operations
+
 - ✅ **Batch operation templates** for reusable workflows
 - ✅ **Conditional batch operations** with if/then/else logic
 - ✅ **Safe recycle bin deletion** on Windows
 - ✅ **Recycle bin management** (list, restore, clear)
 
-#### External Tool Integration
+#### Advanced External Tool Integration
+
 - ✅ **Tool registry system** for external applications
 - ✅ **File type associations** with custom tools
 - ✅ **Tool execution tracking** and statistics
 - ✅ **Persistent tool configuration**
 
 #### Health & Diagnostics
+
 - ✅ **Health monitoring** for system resources and modules
 - ✅ **Diagnostic data export** with sanitization options
 - ✅ **Startup health checks** for configuration validation
 - ✅ **Disk space monitoring** and warnings
 
 #### Path & File Safety
+
 - ✅ **Path normalization** and validation
 - ✅ **Path traversal protection** and security checks
 - ✅ **Symlink detection** and reparse point handling
 - ✅ **Cross-platform path conversion** (Windows/Linux/macOS)
 
 #### Enhanced Logging
+
 - ✅ **Centralized logging** with rotation and filtering
 - ✅ **Write-Log facade** with correlation IDs
 - ✅ **Structured log entries** with metadata
 - ✅ **Log analysis** and querying capabilities
 
-##  Requirements
+## Requirements
 
 - **PowerShell 7.0+** (PowerShell Core)
 - **Windows 10/11** (or Windows Server 2016+) *for full GUI features*
@@ -206,9 +213,9 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 - **macOS** (10.13+) *for command-line features*
 - **.NET Framework 4.7.2+** (for WPF GUI on Windows)
 
-<img src="screenshot.png" alt="UI screenshot" />
+![UI screenshot](screenshot.png)
 
-##  Installation
+## Installation
 
 ### Option 1: Clone Repository
 
@@ -224,7 +231,7 @@ Import-Module .\PowerShellFileManager.psd1
 Import-Module PowerShellFileManager
 ```
 
-##  Quick Start
+## Quick Start
 
 ### Launch the File Manager
 
@@ -263,7 +270,7 @@ New-QueryBuilder -InitialPath "C:\Data"
 New-ScriptWorkspace
 ```
 
-##  Usage Examples
+## Usage Examples
 
 ### Find Duplicate Files
 
@@ -566,7 +573,7 @@ Set-FileManagerConfig -Theme "Light" -MaxCacheSize 200MB -Save
 Reset-FileManagerConfig
 ```
 
-##  Customization
+## Customization
 
 ### Themes
 
@@ -587,7 +594,7 @@ Install-Plugin -Path "C:\MyPlugin.psm1"
 Uninstall-Plugin -Name "MyPlugin"
 ```
 
-##  Keyboard Shortcuts
+## Keyboard Shortcuts
 
 | Shortcut | Action |
 |----------|--------|
@@ -600,9 +607,8 @@ Uninstall-Plugin -Name "MyPlugin"
 | `F2` | Rename selected item |
 | `Ctrl+A` | Select all items |
 
-##  Architecture
+## Architecture
 
-```
 PowerShellFileManager/
 ├── PowerShellFileManager.psd1       # Module manifest
 ├── PowerShellFileManager.psm1       # Root module
@@ -647,11 +653,10 @@ PowerShellFileManager/
 │       ├── Themes/                  # Theme resources
 │       └── Localization/            # Language files
 └── Plugins/                         # User plugins
-```
 
 ---
 
-##  Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -661,27 +666,24 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-##  License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-##  Acknowledgments
+## Acknowledgments
 
 - Built with PowerShell 7 and Windows Presentation Foundation (WPF)
 - Inspired by modern file managers and PowerShell's extensibility
 - Community contributions and feedback
 
-##  Documentation
+## Documentation
 
 - **[EXAMPLES.md](docs/EXAMPLES.md)** - File Manager usage examples
 - **[GETTING_STARTED.md](docs/GETTING_STARTED.md)** - Getting started guide
 - **[QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md)** - Quick reference guide
 - **[USER_GUIDE.md](docs/USER_GUIDE.md)** - Comprehensive user guide for GUI features
 
-##  Support
+## Support
 
 **Issues**: [GitHub Issues](https://github.com/J-Ellette/PowerShellFileManager/issues)
 **Discussions**: [GitHub Discussions](https://github.com/J-Ellette/PowerShellFileManager/discussions)
-
-##
-**Made with ❤️ using PowerShell 7**

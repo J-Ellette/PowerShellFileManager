@@ -236,8 +236,6 @@ Include comprehensive comment-based help for all exported functions:
 
 .LINK
     Related functions or documentation.
-#>
-```
 
 ### Code Comments
 
@@ -322,7 +320,7 @@ if ($PSCmdlet.ShouldProcess($targetPath, "Delete file")) {
 
 ## Resources
 
-- [PowerShell Best Practices](https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/cmdlet-development-guidelines)
-- [WPF Documentation](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/)
+- [PowerShell Best Practices](https://learn.microsoft.com/en-us/powershell/scripting/developer/cmdlet/strongly-encouraged-development-guidelines)
+- [WPF Documentation](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/)
 - [Project Documentation](../README.md)
 - [Contributing Guide](../docs/CONTRIBUTING.md)

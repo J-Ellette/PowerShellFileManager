@@ -435,7 +435,7 @@ Module config is stored at:
 
 ## 📚 More Resources
 
-- [README](README.md) - Full documentation
+- [README](../README.md) - Full documentation
 - [Getting Started](GETTING_STARTED.md) - Tutorials
 - [Examples](EXAMPLES.md) - 10 practical scripts
 - [GitHub Issues](https://github.com/Heathen-Volholl/PowerShellFileManagerV2.0/issues) - Support

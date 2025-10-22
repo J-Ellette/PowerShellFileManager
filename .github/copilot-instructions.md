@@ -325,4 +325,4 @@ if ($PSCmdlet.ShouldProcess($targetPath, "Delete file")) {
 - [PowerShell Best Practices](https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/cmdlet-development-guidelines)
 - [WPF Documentation](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/)
 - [Project Documentation](../README.md)
-- [Contributing Guide](../CONTRIBUTING.md)
+- [Contributing Guide](../docs/CONTRIBUTING.md)

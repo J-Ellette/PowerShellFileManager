@@ -2,11 +2,9 @@
 
 A command-centric file manager built with PowerShell 7, featuring rich GUI integration, advanced file operations, and extensive PowerShell scripting capabilities.
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![PowerShell](https://img.shields.io/badge/PowerShell-7.0%2B-blue.svg)
-![Platform](https://img.shields.io/badge/platforms-Windows/Linux/macOS-blue.svg)
-![Platform](https://img.shields.io/badge/platform-Linux-blue.svg)
-![Platform](https://img.shields.io/badge/platform-macOS-blue.svg) <br>
+![Platform](https://img.shields.io/badge/Platforms-Windows/Linux/macOS-blue.svg) <br>
 [![PSScriptAnalyzer](https://github.com/J-Ellette/PowerShellFileManager/actions/workflows/powershell.yml/badge.svg)](https://github.com/J-Ellette/PowerShellFileManager/actions/workflows/powershell.yml)
 [![CodeQL](https://github.com/J-Ellette/PowerShellFileManager/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/J-Ellette/PowerShellFileManager/actions/workflows/github-code-scanning/codeql)
 [![Copilot coding agent](https://github.com/J-Ellette/PowerShellFileManager/actions/workflows/copilot-swe-agent/copilot/badge.svg)](https://github.com/J-Ellette/PowerShellFileManager/actions/workflows/copilot-swe-agent/copilot)

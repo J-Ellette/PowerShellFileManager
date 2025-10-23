@@ -6,8 +6,9 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 ![PowerShell](https://img.shields.io/badge/PowerShell-7.0%2B-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Linux-blue.svg)
-![Platform](https://img.shields.io/badge/platform-macOS-blue.svg)
+![Platform](https://img.shields.io/badge/platform-macOS-blue.svg) <br>
 [![PSScriptAnalyzer](https://github.com/J-Ellette/PowerShellFileManager/actions/workflows/powershell.yml/badge.svg)](https://github.com/J-Ellette/PowerShellFileManager/actions/workflows/powershell.yml)
+[![CodeQL](https://github.com/J-Ellette/PowerShellFileManager/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/J-Ellette/PowerShellFileManager/actions/workflows/github-code-scanning/codeql)
 
 ## Features
 

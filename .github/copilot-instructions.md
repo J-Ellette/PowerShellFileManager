@@ -2,16 +2,25 @@
 
 This repository contains a command-centric file manager built with PowerShell 7, featuring rich GUI integration, advanced file operations, and extensive PowerShell scripting capabilities.
 
-## Project Overview
+## Security Policy
 
-- **Language**: PowerShell 7.0+
-- **Platform Support**: Windows (full GUI), Linux, macOS (command-line features)
-- **GUI Framework**: Windows Presentation Foundation (WPF) for Windows
-- **Module Type**: PowerShell Script Module (.psm1)
+This project follows strict security guidelines to ensure safe file operations and protect user data. All code must adhere to these security requirements.
 
-## Code Style Guidelines
+### Security Headers and Configuration
 
-### PowerShell Best Practices
+For any web-based components or HTTP endpoints, implement these mandatory security headers:
+- **Content-Security-Policy**: `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'`
+- **X-Frame-Options**: `DENY`
+- **X-Content-Type-Options**: `nosniff`
+- **X-XSS-Protection**: `1; mode=block`
+- **Strict-Transport-Security**: `max-age=31536000; includeSubDomains`
+- **Referrer-Policy**: `strict-origin-when-cross-origin`
+
+### Input Validation and Sanitization Library
+
+All user input must be validated and sanitized using these PowerShell security functions:
+
+#### Core Security Functions
 
 1. **Naming Conventions**
    - Use approved PowerShell verbs (Get-, Set-, New-, Remove-, Invoke-, Start-, Stop-, etc.)
@@ -80,12 +89,15 @@ When adding new functionality:
    - Implement secure file deletion (DOD 5220.22-M standard)
    - Support digital signatures for file authentication
 
-4. **User Input**
-   - Validate and sanitize all user input
-   - Use parameterized queries where applicable
-   - Prevent script injection in dynamic script execution
-
-5. **Permissions**
+4. **User Input Validation and Sanitization**
+   - **String sanitization**: Escape special characters using `[System.Management.Automation.WildcardPattern]::Escape()`
+   - **Script injection prevention**: Use `-Command` parameter with string arrays instead of concatenated strings
+   - **File name validation**: Check for illegal characters using `[System.IO.Path]::GetInvalidFileNameChars()`
+   - **Size limits**: Implement maximum file size and path length checks
+   - **Content type validation**: Verify file extensions match actual file content
+   - **Path traversal prevention**: Use `Test-SecureInput` function for all user-provided paths
+   - **Command injection prevention**: Never use `Invoke-Expression` with user input
+   - **Parameter validation**: Always use `[ValidateScript()]` attributes for complex validation
    - Check file permissions before operations
    - Request UAC elevation when necessary
    - Respect ACLs and security descriptors
@@ -236,13 +248,17 @@ Include comprehensive comment-based help for all exported functions:
 
 .LINK
     Related functions or documentation.
-
-### Code Comments
-
-- Use comments to explain "why", not "what"
-- Document complex algorithms or business logic
-- Keep comments up-to-date with code changes
-- Use TODO comments sparingly and track them
+    
+function Example-Function {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ParameterName
+    )
+    
+    # Function implementation
+}
+```
 
 ## Integration Features
 
@@ -270,16 +286,14 @@ Include comprehensive comment-based help for all exported functions:
 
 When contributing to this project:
 
-1. **Read docs/CONTRIBUTING.md** for detailed contribution guidelines
+### Parameter Validation and Input Sanitization
 2. **Follow existing patterns** in the codebase
 3. **Update documentation** for new features
 4. **Check code style** follows PowerShell best practices
 5. **Platform testing** - Test on multiple platforms when possible
+### Parameter Validation and Input Sanitization
 
-## Common Patterns to Follow
-
-### Parameter Validation
-
+Always use the security functions for input validation:
 ```powershell
 [CmdletBinding()]
 param(
@@ -309,18 +323,4 @@ end {
 
 ### WhatIf/Confirm Support
 
-```powershell
-[CmdletBinding(SupportsShouldProcess=$true)]
-param(...)
-
-if ($PSCmdlet.ShouldProcess($targetPath, "Delete file")) {
-    Remove-Item -Path $targetPath
-}
-```
-
-## Resources
-
-- [PowerShell Best Practices](https://learn.microsoft.com/en-us/powershell/scripting/developer/cmdlet/strongly-encouraged-development-guidelines)
-- [WPF Documentation](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/)
-- [Project Documentation](../README.md)
-- [Contributing Guide](../docs/CONTRIBUTING.md)
+For destructive operations, always implement WhatIf and Confirm support:

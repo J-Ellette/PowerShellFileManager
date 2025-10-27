@@ -20,7 +20,8 @@ jobs:
   scan:
     runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v4      
+      - name: PowerShield
       - uses: J-Ellette/PowerShield@PowerShell_Security_Scanning
-      - name: PowerShield: PowerShell Security Scanner
         # with:
         #   <input-name>: <value>  # (add inputs here if the action supports any)

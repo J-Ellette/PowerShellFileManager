@@ -1,0 +1,32 @@
+name: PowerShell Security Analysis
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: write
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Run PowerShield Analysis
+      shell: pwsh
+      run: |
+        Import-Module ./src/PowerShellSecurityAnalyzer.psm1 -Force
+        $result = Invoke-WorkspaceAnalysis -WorkspacePath "."
+        
+        # Export results
+        $result | ConvertTo-Json -Depth 10 | Out-File 'powershield-results.json'
+        
+        # Generate SARIF
+        . ./scripts/Convert-ToSARIF.ps1
+        Convert-ToSARIF -InputFile 'powershield-results.json' -OutputFile 'powershield-results.sarif'
+    
+    - name: Upload SARIF
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: powershield-results.sarif

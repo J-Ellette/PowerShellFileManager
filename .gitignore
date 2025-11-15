@@ -1,0 +1,76 @@
+# PowerShell File Manager V2.0 - .gitignore
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# PowerShell
+*.ps1xml
+*.psc1
+*.pssc
+*_profile.ps1
+
+# Plugin directory (user plugins)
+Plugins/*.psm1
+!Plugins/README.md
+
+# Configuration directory
+*.config.json
+.vscode/
+.vs/
+
+# User data
+SavedSearches/
+History/
+Logs/
+
+# Temporary files
+*.tmp
+*.temp
+*~
+.DS_Store
+Thumbs.db
+
+# IDE specific
+.idea/
+*.swp
+*.swo
+
+# Package management
+packages/
+*.nupkg
+
+# Output
+Output/
+Dist/
+
+# Node modules (if any)
+node_modules/
+
+# Test results
+TestResults/
+testResults.xml
+coverage.xml
+*.trx
+
+# AI Development Session Logs
+copilot.md
+claude.md
+codex.md
+.claude/
+
+# Improvement logs
+Quality_Improvements.md
+
+

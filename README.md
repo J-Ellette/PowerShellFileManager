@@ -670,3 +670,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Issues**: [GitHub Issues](https://github.com/J-Ellette/PowerShellFileManager/issues)
 **Discussions**: [GitHub Discussions](https://github.com/J-Ellette/PowerShellFileManager/discussions)
+
+## Quick Launch
+
+From a PowerShell 7 prompt (pwsh, not Windows PowerShell 5.1 — the module requires 7.0)(changing filepath to match yours):
+
+```powershell
+cd c:\Github\PowerShellFileManager
+Import-Module .\PowerShellFileManager.psd1
+Start-FileManager
+```

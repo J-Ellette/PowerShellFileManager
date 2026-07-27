@@ -48,66 +48,7 @@ function Start-FileManager {
         WindowStartupLocation="CenterScreen"
         Background="#1E1E1E">
     <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="#2D2D30"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="Margin" Value="2"/>
-        </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-        </Style>
-        <Style TargetType="Menu">
-            <Setter Property="Background" Value="#2D2D30"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-        </Style>
-        <Style TargetType="MenuItem">
-            <Setter Property="Background" Value="#2D2D30"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-        </Style>
-        <Style TargetType="ContextMenu">
-            <Setter Property="Background" Value="#2D2D30"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-        </Style>
-        <Style TargetType="ComboBox">
-            <Setter Property="Background" Value="#1E1E1E"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-            <Setter Property="BorderBrush" Value="#3E3E42"/>
-            <Setter Property="BorderThickness" Value="1"/>
-        </Style>
-        <Style TargetType="ComboBoxItem">
-            <Setter Property="Background" Value="#1E1E1E"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-            <Style.Triggers>
-                <Trigger Property="IsHighlighted" Value="True">
-                    <Setter Property="Background" Value="#007ACC"/>
-                    <Setter Property="Foreground" Value="White"/>
-                </Trigger>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#007ACC"/>
-                    <Setter Property="Foreground" Value="White"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style TargetType="ListBox">
-            <Setter Property="Background" Value="#1E1E1E"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-            <Setter Property="BorderBrush" Value="#3E3E42"/>
-        </Style>
-        <Style TargetType="ListBoxItem">
-            <Setter Property="Background" Value="#1E1E1E"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#007ACC"/>
-                    <Setter Property="Foreground" Value="White"/>
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#3E3E42"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+$(Get-FileManagerThemeXaml)
     </Window.Resources>
     
     <Grid>
@@ -259,14 +200,6 @@ function Start-FileManager {
                             <MenuItem Header="Properties" Name="CtxProperties"/>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Foreground" Value="#CCCCCC"/>
-                            <Setter Property="Background" Value="#2D2D30"/>
-                            <Setter Property="FontWeight" Value="SemiBold"/>
-                            <Setter Property="Padding" Value="8,4"/>
-                        </Style>
-                    </DataGrid.ColumnHeaderStyle>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*">
                             <DataGridTextColumn.ElementStyle>
@@ -308,7 +241,7 @@ function Start-FileManager {
                 </DataGrid>
             </Border>
             
-            <GridSplitter Grid.Column="1" Width="5" Background="#3E3E42" HorizontalAlignment="Center"/>
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center"/>
             
             <!-- Side Panel -->
             <TabControl Grid.Column="2" Background="#252526" Margin="5">
@@ -362,14 +295,6 @@ function Start-FileManager {
                               AlternatingRowBackground="#252526"
                               GridLinesVisibility="Horizontal"
                               HeadersVisibility="Column">
-                        <DataGrid.ColumnHeaderStyle>
-                            <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Foreground" Value="#CCCCCC"/>
-                                <Setter Property="Background" Value="#2D2D30"/>
-                                <Setter Property="FontWeight" Value="SemiBold"/>
-                                <Setter Property="Padding" Value="8,4"/>
-                            </Style>
-                        </DataGrid.ColumnHeaderStyle>
                     </DataGrid>
                 </Border>
             </TabItem>

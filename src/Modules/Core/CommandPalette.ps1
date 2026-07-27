@@ -314,36 +314,7 @@ function Invoke-CommandPalette {
         WindowStartupLocation="CenterScreen"
         Background="#1E1E1E">
     <Window.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-        </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Background" Value="#1E1E1E"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-            <Setter Property="BorderBrush" Value="#3E3E42"/>
-            <Setter Property="CaretBrush" Value="#CCCCCC"/>
-        </Style>
-        <Style TargetType="RadioButton">
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-        </Style>
-        <Style TargetType="ListBox">
-            <Setter Property="Background" Value="#1E1E1E"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-            <Setter Property="BorderBrush" Value="#3E3E42"/>
-        </Style>
-        <Style TargetType="ListBoxItem">
-            <Setter Property="Background" Value="#1E1E1E"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#007ACC"/>
-                    <Setter Property="Foreground" Value="White"/>
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#3E3E42"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+$(Get-FileManagerThemeXaml)
     </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>

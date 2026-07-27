@@ -48,20 +48,7 @@ function Show-ObjectInspector {
         WindowStartupLocation="CenterScreen"
         Background="#1E1E1E">
     <Window.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-        </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Background" Value="#1E1E1E"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-            <Setter Property="BorderBrush" Value="#3E3E42"/>
-            <Setter Property="CaretBrush" Value="#CCCCCC"/>
-        </Style>
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="#2D2D30"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-            <Setter Property="BorderThickness" Value="0"/>
-        </Style>
+$(Get-FileManagerThemeXaml)
     </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>

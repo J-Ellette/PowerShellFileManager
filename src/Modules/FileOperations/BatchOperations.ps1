@@ -49,10 +49,13 @@ function Show-BatchOperationUI {
     $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Batch Operations - $Operation" 
+        Title="Batch Operations - $Operation"
         Height="700" Width="1000"
         WindowStartupLocation="CenterScreen"
         Background="#1E1E1E">
+    <Window.Resources>
+$(Get-FileManagerThemeXaml)
+    </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -450,10 +453,13 @@ function Show-BatchOperationConfig {
     $configXaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Configure $Operation Operation" 
+        Title="Configure $Operation Operation"
         Height="400" Width="500"
         WindowStartupLocation="CenterOwner"
         Background="#1E1E1E">
+    <Window.Resources>
+$(Get-FileManagerThemeXaml)
+    </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

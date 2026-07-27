@@ -124,6 +124,35 @@ Describe 'Archive operations' {
     }
 }
 
+Describe 'Window XAML' {
+    BeforeAll {
+        Add-Type -AssemblyName PresentationFramework -ErrorAction SilentlyContinue
+        # Dot-source directly: Get-FileManagerThemeXaml is module-private
+        . (Join-Path $RepoRoot 'src/Modules/Core/Common.ps1')
+    }
+
+    It 'window XAML in <_> parses with the shared theme injected' -Skip:(-not $IsWindows) -ForEach @(
+        'src/Scripts/Start-FileManager.ps1'
+        'src/Modules/Core/CommandPalette.ps1'
+        'src/Modules/Core/QueryBuilder.ps1'
+        'src/Modules/Core/ObjectInspector.ps1'
+        'src/Modules/Core/ScriptWorkspace.ps1'
+        'src/Modules/Core/RunspaceManager.ps1'
+        'src/Modules/FileOperations/BatchOperations.ps1'
+    ) {
+        $raw = Get-Content (Join-Path $RepoRoot $_) -Raw
+        $windows = [regex]::Matches($raw, '(?s)@"\s*\r?\n(<Window\b.*?</Window>)\s*\r?\n"@')
+        $windows.Count | Should -BeGreaterThan 0
+
+        foreach ($w in $windows) {
+            # Expand the same interpolations the here-string would perform
+            $Operation = 'Copy'
+            $xaml = $ExecutionContext.InvokeCommand.ExpandString($w.Groups[1].Value)
+            { [Windows.Markup.XamlReader]::Parse($xaml) } | Should -Not -Throw
+        }
+    }
+}
+
 Describe 'GUI collection safety' {
     It 'never binds a raw pipeline result to ItemsSource' {
         # A single-item pipeline unrolls to a scalar PSCustomObject, which WPF

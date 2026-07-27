@@ -124,6 +124,21 @@ Describe 'Archive operations' {
     }
 }
 
+Describe 'GUI collection safety' {
+    It 'never binds a raw pipeline result to ItemsSource' {
+        # A single-item pipeline unrolls to a scalar PSCustomObject, which WPF
+        # rejects ("Cannot convert ... to System.Collections.IEnumerable").
+        # Every ItemsSource assignment must be an @()-wrapped expression or one
+        # of the variables that are @()-built upstream ($items, $filtered).
+        $gui = Join-Path $RepoRoot 'src/Scripts/Start-FileManager.ps1'
+        $offenders = Select-String -Path $gui -Pattern 'ItemsSource\s*=' | Where-Object {
+            $_.Line -notmatch 'ItemsSource\s*=\s*@\(' -and
+            $_.Line -notmatch 'ItemsSource\s*=\s*\$(items|filtered|script:AllItems)\s*$'
+        }
+        $offenders | ForEach-Object { "$($_.LineNumber): $($_.Line.Trim())" } | Should -BeNullOrEmpty
+    }
+}
+
 Describe 'Sync-Directories' {
     It 'exposes the documented -Mode parameter' {
         (Get-Command Sync-Directories).Parameters.Keys | Should -Contain 'Mode'

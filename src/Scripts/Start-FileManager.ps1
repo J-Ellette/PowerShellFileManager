@@ -513,7 +513,9 @@ function Start-FileManager {
             param($path)
             
             try {
-                $items = Get-ChildItem -Path $path -ErrorAction Stop | ForEach-Object {
+                # @() keeps single-item and empty listings as collections; WPF
+                # ItemsSource requires IEnumerable
+                $items = @(Get-ChildItem -Path $path -ErrorAction Stop | ForEach-Object {
                     [PSCustomObject]@{
                         Name = $_.Name
                         FullName = $_.FullName
@@ -524,8 +526,8 @@ function Start-FileManager {
                         Attributes = $_.Attributes.ToString()
                         IsDirectory = $_.PSIsContainer
                     }
-                }
-                
+                })
+
                 $script:AllItems = $items
                 $fileGrid.ItemsSource = $items
                 $itemCountText.Text = "$($items.Count) items"
@@ -542,7 +544,7 @@ function Start-FileManager {
                 
                 # Add to history
                 Add-NavigationHistory -Path $path
-                $historyList.ItemsSource = Get-NavigationHistory
+                $historyList.ItemsSource = @(Get-NavigationHistory)
                 
             } catch {
                 $statusText.Text = "Error: $_"
@@ -591,7 +593,7 @@ function Start-FileManager {
             $consoleOutput.AppendText("`nOpening Query Builder...")
             $results = New-QueryBuilder -InitialPath $script:CurrentPath
             if ($results) {
-                $fileGrid.ItemsSource = $results
+                $fileGrid.ItemsSource = @($results)
             }
         })
         
@@ -676,7 +678,7 @@ function Start-FileManager {
                 $filterStatusText.Text = ""
                 $itemCountText.Text = "$($script:AllItems.Count) items"
             } else {
-                $filtered = $script:AllItems | Where-Object { $_.Name -like "*$filterText*" }
+                $filtered = @($script:AllItems | Where-Object { $_.Name -like "*$filterText*" })
                 $fileGrid.ItemsSource = $filtered
                 $filterStatusText.Text = "Filtered: $($filtered.Count) of $($script:AllItems.Count)"
                 $itemCountText.Text = "$($filtered.Count) items"
@@ -931,7 +933,7 @@ function Start-FileManager {
                 $consoleOutput.AppendText("`nSearching for: $searchTerm in $($script:CurrentPath)")
                 $results = Search-Files -Path $script:CurrentPath -Pattern $searchTerm
                 if ($results) {
-                    $fileGrid.ItemsSource = $results | ForEach-Object {
+                    $fileGrid.ItemsSource = @($results | ForEach-Object {
                         [PSCustomObject]@{
                             Name = $_.Name
                             FullName = $_.FullName
@@ -941,7 +943,7 @@ function Start-FileManager {
                             Attributes = $_.Attributes.ToString()
                             IsDirectory = $_.PSIsContainer
                         }
-                    }
+                    })
                     $itemCountText.Text = "$($results.Count) results"
                     $consoleOutput.AppendText("`nFound $($results.Count) matching files")
                 } else {

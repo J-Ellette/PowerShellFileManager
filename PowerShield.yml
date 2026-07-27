@@ -1,2 +1,0 @@
-- name: PowerShield: PowerShell Security Scanner
-  uses: J-Ellette/PowerShield@PowerShell_Security_Scanning

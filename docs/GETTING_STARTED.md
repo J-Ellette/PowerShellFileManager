@@ -248,7 +248,7 @@ Get-FileChecksum -Path "file.zip" -Algorithm MD5
 New-Archive -Path "C:\MyFolder" -Destination "archive.zip" -Format ZIP
 
 # Extract archive
-Expand-Archive -Path "archive.zip" -Destination "C:\Extracted"
+Expand-ArchiveFile -Path "archive.zip" -Destination "C:\Extracted"
 
 # List archive contents
 Get-ArchiveContent -Path "archive.zip"

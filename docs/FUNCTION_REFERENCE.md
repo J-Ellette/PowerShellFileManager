@@ -4,7 +4,7 @@
 
 This document provides a quick reference for all new functions added in V2.1.
 
-## Configuration Management (ConfigurationManager.psm1)
+## Configuration Management (ConfigurationManager.ps1)
 
 ```powershell
 Get-FileManagerConfig              # Get current configuration
@@ -12,7 +12,7 @@ Set-FileManagerConfig              # Update configuration settings
 Reset-FileManagerConfig            # Reset configuration to defaults
 ```
 
-## Result Models (ResultModels.psm1)
+## Result Models (ResultModels.ps1)
 
 ```powershell
 New-DirectoryEntry                 # Create DirectoryEntry from FileSystemInfo
@@ -29,7 +29,7 @@ New-OperationRecord                # Create OperationRecord for tracking
 - `CacheEntry` - Cache management
 - `PerformanceMetric` - Performance data
 
-## Path Validation & Safety (PathValidation.psm1)
+## Path Validation & Safety (PathValidation.ps1)
 
 ```powershell
 Resolve-NormalizedPath            # Normalize and validate paths
@@ -40,16 +40,16 @@ Test-ReparsePoint                 # Detect symlinks and junctions
 Get-ReparsePointTarget            # Get symlink target path
 ```
 
-## Recycle Bin Operations (RecycleBinOperations.psm1)
+## Recycle Bin Operations (RecycleBinOperations.ps1)
 
 ```powershell
 Remove-ItemToRecycleBin           # Safe deletion via Recycle Bin
 Get-RecycleBinItems               # List Recycle Bin contents
 Restore-RecycleBinItem            # Restore deleted item
-Clear-RecycleBin                  # Empty Recycle Bin
+Clear-RecycleBinItems             # Empty Recycle Bin
 ```
 
-## File Integrity Monitoring (IntegrityMonitoring.psm1)
+## File Integrity Monitoring (IntegrityMonitoring.ps1)
 
 ```powershell
 Enable-IntegrityMonitoring        # Create integrity baseline
@@ -57,7 +57,7 @@ Test-FileIntegrity                # Verify files against baseline
 Remove-FileSecurely               # DOD-compliant secure deletion
 ```
 
-## Performance Monitoring (PerformanceMonitoring.psm1)
+## Performance Monitoring (PerformanceMonitoring.ps1)
 
 ```powershell
 Start-PerformanceTracking         # Begin operation tracking
@@ -69,7 +69,7 @@ Export-PerformanceReport          # Export metrics to JSON/CSV
 Show-PerformanceSummary           # Display formatted summary
 ```
 
-## External Tool Integration (ExternalToolIntegration.psm1)
+## External Tool Integration (ExternalToolIntegration.ps1)
 
 ```powershell
 Register-ExternalTool             # Register external tool
@@ -79,7 +79,7 @@ Update-ExternalTool               # Modify tool configuration
 Unregister-ExternalTool           # Remove tool from registry
 ```
 
-## Health Monitoring & Diagnostics (HealthMonitoring.psm1)
+## Health Monitoring & Diagnostics (HealthMonitoring.ps1)
 
 ```powershell
 Get-FileManagerHealth             # Perform health check
@@ -87,7 +87,7 @@ Export-DiagnosticData             # Create diagnostic bundle
 Test-StartupHealth                # Validate startup conditions
 ```
 
-## Enhanced Logging (Logging.psm1)
+## Enhanced Logging (Logging.ps1)
 
 ```powershell
 Write-Log                         # Simplified logging with correlation IDs
@@ -96,7 +96,7 @@ Write-FileManagerLog              # Write detailed log entry (existing)
 Get-FileManagerLogs               # Retrieve log entries (existing)
 ```
 
-## Enhanced Batch Operations (BatchOperations.psm1)
+## Enhanced Batch Operations (BatchOperations.ps1)
 
 ```powershell
 New-BatchOperationTemplate        # Create reusable template
@@ -105,7 +105,7 @@ Start-ConditionalBatchOperation   # Execute conditional batch operations
 Start-BatchOperation              # Start batch operation (existing)
 ```
 
-## Enhanced Security Operations (SecurityOperations.psm1)
+## Enhanced Security Operations (SecurityOperations.ps1)
 
 ```powershell
 Protect-FileWithPassword          # AES-256 encryption

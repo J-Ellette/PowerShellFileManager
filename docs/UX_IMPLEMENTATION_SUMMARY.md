@@ -178,8 +178,8 @@ Implemented keyboard shortcuts:
 **Files Verified:**
 
 - `src/Scripts/Start-FileManager.ps1` (menu handlers)
-- `src/Modules/PowerToys/PowerRename.psm1`
-- `src/Modules/PowerToys/ImageResizer.psm1`
+- `src/Modules/PowerToys/PowerRename.ps1`
+- `src/Modules/PowerToys/ImageResizer.ps1`
 
 **User Impact:**
 

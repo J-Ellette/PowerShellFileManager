@@ -54,7 +54,7 @@ Get-DiskSpace -Path "C:\" -Depth 3
 New-Archive -Path "C:\Files" -Destination "archive.zip"
 
 # Extract archive
-Expand-Archive -Path "archive.zip" -Destination "C:\Extracted"
+Expand-ArchiveFile -Path "archive.zip" -Destination "C:\Extracted"
 
 # List archive contents
 Get-ArchiveContent -Path "archive.zip"
@@ -292,8 +292,8 @@ Get-ShortcutList  # Get list of all shortcuts
 Get-ShortcutList -Category "FileManager"  # Filter by category
 
 # Workspace Layouts - Window arrangement (FancyZones)
-Save-WorkspaceLayout -Name "Development"
-Apply-WorkspaceLayout -Name "Development"
+Save-WorkspaceSnapshot -Name "Development"
+Set-WindowLayout -LayoutName ThreeColumns
 Get-WorkspaceLayout  # List all saved layouts
 Remove-WorkspaceLayout -Name "OldLayout"
 

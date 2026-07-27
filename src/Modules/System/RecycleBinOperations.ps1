@@ -245,14 +245,14 @@ function Restore-RecycleBinItem {
     }
 }
 
-function Clear-RecycleBin {
+function Clear-RecycleBinItems {
     <#
     .SYNOPSIS
         Empties the Recycle Bin
     .DESCRIPTION
         Permanently deletes all items in the Recycle Bin
     .EXAMPLE
-        Clear-RecycleBin -Confirm:$false
+        Clear-RecycleBinItems -Confirm:$false
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact='High')]
     param()
@@ -264,9 +264,9 @@ function Clear-RecycleBin {
     
     if ($PSCmdlet.ShouldProcess("Recycle Bin", "Empty all items permanently")) {
         try {
-            # Use Clear-RecycleBin cmdlet if available (Windows 10+)
-            if (Get-Command Clear-RecycleBin -ErrorAction SilentlyContinue) {
-                Clear-RecycleBin -Force -ErrorAction Stop
+            # Use the built-in Clear-RecycleBin cmdlet if available (Windows 10+)
+            if (Get-Command Microsoft.PowerShell.Management\Clear-RecycleBin -ErrorAction SilentlyContinue) {
+                Microsoft.PowerShell.Management\Clear-RecycleBin -Force -ErrorAction Stop
                 Write-Host "✓ Recycle Bin emptied successfully" -ForegroundColor Green
             }
             else {
@@ -298,4 +298,4 @@ function Clear-RecycleBin {
     }
 }
 
-Export-ModuleMember -Function Remove-ItemToRecycleBin, Get-RecycleBinItems, Restore-RecycleBinItem, Clear-RecycleBin
+Export-ModuleMember -Function Remove-ItemToRecycleBin, Get-RecycleBinItems, Restore-RecycleBinItem, Clear-RecycleBinItems

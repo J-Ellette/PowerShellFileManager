@@ -58,7 +58,7 @@ function New-Archive {
     }
 }
 
-function Expand-Archive {
+function Expand-ArchiveFile {
     <#
     .SYNOPSIS
         Extracts a compressed archive
@@ -71,7 +71,7 @@ function Expand-Archive {
     .PARAMETER Password
         Optional password for encrypted archives
     .EXAMPLE
-        Expand-Archive -Path archive.zip -Destination C:\Extracted
+        Expand-ArchiveFile -Path archive.zip -Destination C:\Extracted
         Extracts archive
     #>
     [CmdletBinding()]
@@ -97,7 +97,7 @@ function Expand-Archive {
     
     switch ($extension) {
         '.zip' {
-            Expand-Archive -Path $Path -DestinationPath $Destination -Force
+            Microsoft.PowerShell.Archive\Expand-Archive -Path $Path -DestinationPath $Destination -Force
             Write-Host "Archive extracted to: $Destination" -ForegroundColor Green
         }
         '.tar' {
@@ -156,4 +156,4 @@ function Get-ArchiveContent {
     }
 }
 
-Export-ModuleMember -Function New-Archive, Expand-Archive, Get-ArchiveContent
+Export-ModuleMember -Function New-Archive, Expand-ArchiveFile, Get-ArchiveContent

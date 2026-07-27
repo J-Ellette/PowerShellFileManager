@@ -11,11 +11,13 @@
     Launches the file manager application
 #>
 
-# Import required assemblies
-Add-Type -AssemblyName PresentationFramework
-Add-Type -AssemblyName PresentationCore
-Add-Type -AssemblyName WindowsBase
-Add-Type -AssemblyName System.Windows.Forms
+# Import required assemblies (WPF/WinForms are Windows-only)
+if ($IsWindows) {
+    Add-Type -AssemblyName PresentationFramework
+    Add-Type -AssemblyName PresentationCore
+    Add-Type -AssemblyName WindowsBase
+    Add-Type -AssemblyName System.Windows.Forms
+}
 
 function Start-FileManager {
     <#
@@ -32,7 +34,12 @@ function Start-FileManager {
         [Parameter(Mandatory=$false)]
         [string]$InitialPath = $pwd
     )
-    
+
+    if (-not $IsWindows) {
+        Write-Error "Start-FileManager requires Windows (the GUI is built on WPF). The command-line functions of this module remain available on all platforms."
+        return
+    }
+
     $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -498,20 +505,9 @@ function Start-FileManager {
         $script:CurrentPath = $InitialPath
         $addressBar.Text = $script:CurrentPath
         
-        # Helper function for formatting file sizes
-        function Format-FileSize {
-            param([long]$Bytes)
-            if ($Bytes -ge 1GB) {
-                return "{0:N2} GB" -f ($Bytes / 1GB)
-            } elseif ($Bytes -ge 1MB) {
-                return "{0:N2} MB" -f ($Bytes / 1MB)
-            } elseif ($Bytes -ge 1KB) {
-                return "{0:N2} KB" -f ($Bytes / 1KB)
-            } else {
-                return "$Bytes bytes"
-            }
-        }
-        
+        # File size formatting is provided by the shared Format-FileSize helper
+        # in src/Modules/Core/Common.psm1 (available in module scope).
+
         # Load initial directory
         $LoadDirectory = {
             param($path)
@@ -763,7 +759,7 @@ function Start-FileManager {
             if ($folderBrowser.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
                 $destPath = $folderBrowser.SelectedPath
                 $consoleOutput.AppendText("`nSyncing: $sourcePath -> $destPath")
-                Sync-Directories -SourcePath $sourcePath -DestinationPath $destPath -WhatIf
+                Sync-Directories -Source $sourcePath -Destination $destPath -WhatIf
             }
         })
         
@@ -869,7 +865,7 @@ function Start-FileManager {
                     
                     if ($folderBrowser.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
                         $consoleOutput.AppendText("`nExtracting archive: $($selected.FullName)")
-                        Expand-Archive -Path $selected.FullName -DestinationPath $folderBrowser.SelectedPath
+                        Expand-ArchiveFile -Path $selected.FullName -Destination $folderBrowser.SelectedPath
                         $consoleOutput.AppendText("`nExtraction complete")
                     }
                 } else {

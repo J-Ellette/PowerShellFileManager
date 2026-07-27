@@ -2,6 +2,29 @@
 
 # Security Operations Module - ACL management and secure delete
 
+function Read-StreamBytes {
+    # Private helper: Stream.Read may return fewer bytes than requested, so loop until
+    # the buffer is full (ReadExactly requires .NET 7+, but this module targets PS 7.0).
+    param(
+        [Parameter(Mandatory=$true)]
+        [System.IO.Stream]$Stream,
+
+        [Parameter(Mandatory=$true)]
+        [int]$Count
+    )
+
+    $buffer = New-Object byte[] $Count
+    $offset = 0
+    while ($offset -lt $Count) {
+        $read = $Stream.Read($buffer, $offset, $Count - $offset)
+        if ($read -le 0) {
+            throw "Unexpected end of stream; file is truncated or corrupted"
+        }
+        $offset += $read
+    }
+    return ,$buffer
+}
+
 function Get-FileACL {
     <#
     .SYNOPSIS
@@ -59,7 +82,7 @@ function Set-FileACL {
         Set-FileACL -Path C:\file.txt -Principal "DOMAIN\User" -Rights Read -Type Allow
         Grants read permission
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory=$true)]
         [string]$Path,
@@ -80,25 +103,27 @@ function Set-FileACL {
         return
     }
     
-    Write-Host "Setting ACL for: $Path" -ForegroundColor Cyan
-    
-    try {
-        $acl = Get-Acl -Path $Path
-        $accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule(
-            $Principal,
-            $Rights,
-            $Type
-        )
-        
-        $acl.SetAccessRule($accessRule)
-        Set-Acl -Path $Path -AclObject $acl
-        
-        Write-Host "ACL updated successfully" -ForegroundColor Green
-        Write-Host "  Principal: $Principal" -ForegroundColor Gray
-        Write-Host "  Rights: $Rights" -ForegroundColor Gray
-        Write-Host "  Type: $Type" -ForegroundColor Gray
-    } catch {
-        Write-Error "Failed to set ACL: $_"
+    if ($PSCmdlet.ShouldProcess($Path, "Set ACL: $Type $Rights for $Principal")) {
+        Write-Host "Setting ACL for: $Path" -ForegroundColor Cyan
+
+        try {
+            $acl = Get-Acl -Path $Path
+            $accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule(
+                $Principal,
+                $Rights,
+                $Type
+            )
+
+            $acl.SetAccessRule($accessRule)
+            Set-Acl -Path $Path -AclObject $acl
+
+            Write-Host "ACL updated successfully" -ForegroundColor Green
+            Write-Host "  Principal: $Principal" -ForegroundColor Gray
+            Write-Host "  Rights: $Rights" -ForegroundColor Gray
+            Write-Host "  Type: $Type" -ForegroundColor Gray
+        } catch {
+            Write-Error "Failed to set ACL: $_"
+        }
     }
 }
 
@@ -143,16 +168,20 @@ function Remove-SecureFile {
         
         try {
             $fileSize = $file.Length
-            
-            for ($pass = 1; $pass -le $Passes; $pass++) {
-                Write-Host "  Pass $pass/$Passes..." -ForegroundColor Cyan
-                
-                # Overwrite with random data
-                $randomData = New-Object byte[] $fileSize
-                $rng = New-Object System.Security.Cryptography.RNGCryptoServiceProvider
-                $rng.GetBytes($randomData)
-                
-                [System.IO.File]::WriteAllBytes($Path, $randomData)
+            $rng = [System.Security.Cryptography.RandomNumberGenerator]::Create()
+
+            try {
+                for ($pass = 1; $pass -le $Passes; $pass++) {
+                    Write-Host "  Pass $pass/$Passes..." -ForegroundColor Cyan
+
+                    # Overwrite with random data
+                    $randomData = New-Object byte[] $fileSize
+                    $rng.GetBytes($randomData)
+
+                    [System.IO.File]::WriteAllBytes($Path, $randomData)
+                }
+            } finally {
+                $rng.Dispose()
             }
             
             # Final overwrite with zeros
@@ -185,20 +214,20 @@ function Protect-FileWithPassword {
     .EXAMPLE
         $securePassword = ConvertTo-SecureString "MyPassword123" -AsPlainText -Force
         Protect-FileWithPassword -FilePath "C:\secret.txt" -Password $securePassword
+    #>
     [CmdletBinding(SupportsShouldProcess)]
     param(
         [Parameter(Mandatory=$true)]
         [ValidateScript({Test-Path $_})]
         [string]$FilePath,
-        
+
         [Parameter(Mandatory=$true)]
         [SecureString]$Password,
-        
+
         [Parameter(Mandatory=$false)]
         [string]$OutputPath
     )
-    )
-    
+
     if (-not $OutputPath) {
         $OutputPath = "$FilePath.encrypted"
     }
@@ -237,10 +266,13 @@ function Protect-FileWithPassword {
             
             # Write encrypted file with salt and IV prepended
             $outputStream = [System.IO.File]::Create($OutputPath)
-            $outputStream.Write($salt, 0, $salt.Length)
-            $outputStream.Write($aes.IV, 0, $aes.IV.Length)
-            $outputStream.Write($encryptedBytes, 0, $encryptedBytes.Length)
-            $outputStream.Close()
+            try {
+                $outputStream.Write($salt, 0, $salt.Length)
+                $outputStream.Write($aes.IV, 0, $aes.IV.Length)
+                $outputStream.Write($encryptedBytes, 0, $encryptedBytes.Length)
+            } finally {
+                $outputStream.Dispose()
+            }
             
             # Cleanup
             $aes.Dispose()
@@ -303,21 +335,19 @@ function Unprotect-FileWithPassword {
     
     if ($PSCmdlet.ShouldProcess($FilePath, "Decrypt file")) {
         try {
-            # Read encrypted file
+            # Read encrypted file: 32-byte salt + 16-byte IV + ciphertext
             $fileStream = [System.IO.File]::OpenRead($FilePath)
-            
-            # Read salt (32 bytes)
-            $salt = New-Object byte[] 32
-            $fileStream.Read($salt, 0, 32) | Out-Null
-            
-            # Read IV (16 bytes)
-            $iv = New-Object byte[] 16
-            $fileStream.Read($iv, 0, 16) | Out-Null
-            
-            # Read encrypted data
-            $encryptedBytes = New-Object byte[] ($fileStream.Length - 48)
-            $fileStream.Read($encryptedBytes, 0, $encryptedBytes.Length) | Out-Null
-            $fileStream.Close()
+            try {
+                if ($fileStream.Length -lt 48) {
+                    throw "File is too small to be a valid encrypted file"
+                }
+
+                $salt = Read-StreamBytes -Stream $fileStream -Count 32
+                $iv = Read-StreamBytes -Stream $fileStream -Count 16
+                $encryptedBytes = Read-StreamBytes -Stream $fileStream -Count ($fileStream.Length - 48)
+            } finally {
+                $fileStream.Dispose()
+            }
             # Create AES encryption
             $aes = [System.Security.Cryptography.Aes]::Create()
             $aes.KeySize = 256

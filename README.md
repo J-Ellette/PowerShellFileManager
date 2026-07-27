@@ -210,7 +210,7 @@ A command-centric file manager built with PowerShell 7, featuring rich GUI integ
 - **Windows 10/11** (or Windows Server 2016+) *for full GUI features*
 - **Linux** (Ubuntu, Debian, RHEL, etc.) *for command-line features*
 - **macOS** (10.13+) *for command-line features*
-- **.NET Framework 4.7.2+** (for WPF GUI on Windows)
+- **.NET runtime bundled with PowerShell 7** (WPF GUI is Windows-only)
 
 ![UI screenshot](screenshot.png)
 
@@ -334,7 +334,7 @@ Save-SearchQuery -Name "FindLogs" -Query { Get-ChildItem -Filter "*.log" -Recurs
 New-Archive -Path "C:\Files" -Destination "archive.zip" -Format ZIP
 
 # Extract archive
-Expand-Archive -Path "archive.zip" -Destination "C:\Extracted"
+Expand-ArchiveFile -Path "archive.zip" -Destination "C:\Extracted"
 
 # List archive contents
 Get-ArchiveContent -Path "archive.zip"
@@ -387,8 +387,8 @@ Invoke-PowerRename -Path "C:\Photos" -Find "IMG_" -Replace "Photo_"
 Enable-AwakeMode -Duration 3600  # Keep awake for 1 hour
 
 # Workspace Layouts - Manage window arrangements
-Save-WorkspaceLayout -Name "Development"
-Apply-WorkspaceLayout -Name "Development"
+Save-WorkspaceSnapshot -Name "Development"
+Set-WindowLayout -LayoutName ThreeColumns
 
 # Template Manager - Create files from templates
 New-FileFromTemplate -Template "PowerShellScript" -Path "script.ps1"
@@ -543,7 +543,7 @@ Get-RecycleBinItems
 Restore-RecycleBinItem -Name "file.txt"
 
 # Empty Recycle Bin
-Clear-RecycleBin
+Clear-RecycleBinItems
 
 # Normalize and validate paths
 $safePath = Resolve-NormalizedPath -Path ".\..\..\file.txt"
@@ -608,50 +608,34 @@ Uninstall-Plugin -Name "MyPlugin"
 
 ## Architecture
 
+The root module (`PowerShellFileManager.psm1`) dot-sources every feature file
+under `src/Modules/` into a single module scope, then the manifest's
+`FunctionsToExport` defines the public API. Feature files are organized by
+category:
+
 PowerShellFileManager/
-├── PowerShellFileManager.psd1       # Module manifest
-├── PowerShellFileManager.psm1       # Root module
+├── PowerShellFileManager.psd1       # Module manifest (public API list)
+├── PowerShellFileManager.psm1       # Root module (loads all feature files)
+├── PSScriptAnalyzerSettings.psd1    # Lint configuration
 ├── src/
 │   ├── Modules/
-│   │   ├── Core/                    # Core functionality
-│   │   │   ├── CommandPalette.psm1
-│   │   │   ├── QueryBuilder.psm1
-│   │   │   ├── ScriptWorkspace.psm1
-│   │   │   ├── ObjectInspector.psm1
-│   │   │   └── RunspaceManager.psm1
-│   │   ├── FileOperations/          # File operations
-│   │   │   ├── BatchOperations.psm1
-│   │   │   ├── FileManagement.psm1
-│   │   │   └── ArchiveOperations.psm1
-│   │   ├── Navigation/              # Navigation features
-│   │   │   ├── NavigationHistory.psm1
-│   │   │   └── QuickFilter.psm1
-│   │   ├── Search/                  # Search functionality
-│   │   │   ├── AdvancedSearch.psm1
-│   │   │   └── DiskAnalyzer.psm1
-│   │   ├── Integration/             # External integrations
-│   │   │   ├── GitIntegration.psm1
-│   │   │   ├── CloudIntegration.psm1
-│   │   │   └── NetworkIntegration.psm1
-│   │   ├── Preview/                 # Preview and metadata
-│   │   │   ├── PreviewProviders.psm1
-│   │   │   └── MetadataEditor.psm1
-│   │   ├── Security/                # Security operations
-│   │   │   └── SecurityOperations.psm1
-│   │   └── System/                  # System features
-│   │       ├── BackgroundOperations.psm1
-│   │       └── PluginSystem.psm1
-│   ├── Scripts/
-│   │   └── Start-FileManager.ps1    # Main application
-│   ├── UI/
-│   │   ├── Controls/                # Custom UI controls
-│   │   ├── Views/                   # View templates
-│   │   └── Themes/                  # Theme files
-│   └── Resources/
-│       ├── Icons/                   # Icon files
-│       ├── Themes/                  # Theme resources
-│       └── Localization/            # Language files
-└── Plugins/                         # User plugins
+│   │   ├── Core/                    # Command palette, query builder, script
+│   │   │   │                        #   workspace, object inspector, runspaces
+│   │   │   └── Common.ps1           # Shared private helpers
+│   │   ├── FileOperations/          # Batch ops, file management, archives
+│   │   ├── Navigation/              # History and quick filter
+│   │   ├── Search/                  # Advanced search, disk analyzer
+│   │   ├── Integration/             # Git, cloud, network, external tools
+│   │   ├── Preview/                 # Preview providers, metadata editor
+│   │   ├── PowerToys/               # PowerToys-style utilities
+│   │   ├── Security/                # ACL, encryption, integrity monitoring
+│   │   └── System/                  # Background ops, config, logging,
+│   │                                #   health, plugins, recycle bin, paths
+│   └── Scripts/
+│       └── Start-FileManager.ps1    # Main WPF application
+├── tests/
+│   └── PowerShellFileManager.Tests.ps1  # Pester test suite
+└── Plugins/                         # User plugins (.psm1)
 
 ---
 

@@ -178,7 +178,7 @@ function New-QueryBuilder {
                         [System.Windows.MessageBox]::Show("Invalid query format. Query must start with Get-ChildItem.", "Error", 'OK', 'Error')
                         return
                     }
-                    $results = Invoke-Expression $generatedQuery.Text
+                    $results = & ([scriptblock]::Create($generatedQuery.Text))
                     $window.Tag = $results
                     $window.DialogResult = $true
                     $window.Close()
@@ -375,7 +375,7 @@ function Update-GeneratedQuery {
                 $ResultsHeader.Text = "Preview Results (Error: Invalid query format)"
                 return
             }
-            $results = Invoke-Expression $query | Select-Object -First 100
+            $results = & ([scriptblock]::Create($query)) | Select-Object -First 100
             $previewData = $results | Select-Object Name, Length, LastWriteTime, FullName
             $PreviewGrid.ItemsSource = $previewData
             $ResultsHeader.Text = "Preview Results ($($results.Count) items shown, may be more...)"

@@ -215,32 +215,32 @@ All new features were added by:
 
 The GUI integrates the following PowerShell modules:
 
-- `ArchiveOperations.psm1` - Archive creation and extraction
-- `SecurityOperations.psm1` - ACL management and secure delete
-- `GitIntegration.psm1` - Git status display
-- `NetworkIntegration.psm1` - FTP/SFTP connections
-- `ObjectInspector.psm1` - Property inspection
-- `MetadataEditor.psm1` - File attribute editing
-- `AdvancedSearch.psm1` - File searching
-- `FileManagement.psm1` - Sync, duplicates, checksum
-- `BatchOperations.psm1` - Batch file operations
-- `DiskAnalyzer.psm1` - Disk space analysis
-- `CommandPalette.psm1` - Command palette
-- `QueryBuilder.psm1` - Visual query builder
-- `ScriptWorkspace.psm1` - Script editing
-- `PluginSystem.psm1` - Plugin management
+- `ArchiveOperations.ps1` - Archive creation and extraction
+- `SecurityOperations.ps1` - ACL management and secure delete
+- `GitIntegration.ps1` - Git status display
+- `NetworkIntegration.ps1` - FTP/SFTP connections
+- `ObjectInspector.ps1` - Property inspection
+- `MetadataEditor.ps1` - File attribute editing
+- `AdvancedSearch.ps1` - File searching
+- `FileManagement.ps1` - Sync, duplicates, checksum
+- `BatchOperations.ps1` - Batch file operations
+- `DiskAnalyzer.ps1` - Disk space analysis
+- `CommandPalette.ps1` - Command palette
+- `QueryBuilder.ps1` - Visual query builder
+- `ScriptWorkspace.ps1` - Script editing
+- `PluginSystem.ps1` - Plugin management
 - **PowerToys Modules** (in `src/Modules/PowerToys/`):
-  - `ImageResizer.psm1` - Image processing and resizing
-  - `TextExtractor.psm1` - OCR text extraction
-  - `ColorPicker.psm1` - Screen color picking
-  - `HostsFileEditor.psm1` - Hosts file management
-  - `QuickAccent.psm1` - Accented characters
-  - `ShortcutGuide.psm1` - Keyboard shortcuts
-  - `WorkspaceLayouts.psm1` - Window management
-  - `TemplateManager.psm1` - File templates
-  - `AwakeMode.psm1` - System awake mode
-  - `PowerRename.psm1` - Advanced renaming
-  - `AlwaysOnTop.psm1` - Window pinning (approved verbs)
-  - `FileLocksmith.psm1` - File lock detection
+  - `ImageResizer.ps1` - Image processing and resizing
+  - `TextExtractor.ps1` - OCR text extraction
+  - `ColorPicker.ps1` - Screen color picking
+  - `HostsFileEditor.ps1` - Hosts file management
+  - `QuickAccent.ps1` - Accented characters
+  - `ShortcutGuide.ps1` - Keyboard shortcuts
+  - `WorkspaceLayouts.ps1` - Window management
+  - `TemplateManager.ps1` - File templates
+  - `AwakeMode.ps1` - System awake mode
+  - `PowerRename.ps1` - Advanced renaming
+  - `AlwaysOnTop.ps1` - Window pinning (approved verbs)
+  - `FileLocksmith.ps1` - File lock detection
 
 All functions are now accessible through both the GUI and PowerShell command line.

@@ -308,20 +308,6 @@ function Start-ProcessQueue {
     $timer.Start()
 }
 
-function Format-FileSize {
-    param([long]$Bytes)
-    
-    if ($Bytes -ge 1GB) {
-        return "{0:N2} GB" -f ($Bytes / 1GB)
-    } elseif ($Bytes -ge 1MB) {
-        return "{0:N2} MB" -f ($Bytes / 1MB)
-    } elseif ($Bytes -ge 1KB) {
-        return "{0:N2} KB" -f ($Bytes / 1KB)
-    } else {
-        return "$Bytes bytes"
-    }
-}
-
 # Module-level storage for templates
 $script:BatchTemplates = @{}
 

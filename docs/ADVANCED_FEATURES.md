@@ -93,7 +93,7 @@ This document provides a comprehensive summary of the advanced features added to
 - `Remove-ItemToRecycleBin` - Move items to Recycle Bin
 - `Get-RecycleBinItems` - List Recycle Bin contents
 - `Restore-RecycleBinItem` - Restore deleted items
-- `Clear-RecycleBin` - Empty Recycle Bin
+- `Clear-RecycleBinItems` - Empty Recycle Bin
 
 **Features**:
 
